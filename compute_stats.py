@@ -11,6 +11,7 @@ Options:
     --mode=<str>                Choose either `regression` or `seg_class`.
 	--pred=<path>               Path to the results directory.
 	--true=<path>               Path to the ground truth directory.
+ 
 """
 
 from docopt import docopt
