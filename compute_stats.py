@@ -6,11 +6,11 @@ Usage:
 	compute_stats.py --version
 
 Options:
-	-h --help                   Show this string.
-	--version                   Show version.
+    -h --help                   Show this string.
+    --version                   Show version.
     --mode=<str>                Choose either `regression` or `seg_class`.
-	--pred=<path>               Path to the results directory.
-	--true=<path>               Path to the ground truth directory.
+    --pred=<path>               Path to the results directory.
+    --true=<path>               Path to the ground truth directory.
  
 """
 
