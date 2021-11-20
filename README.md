@@ -23,11 +23,11 @@ To appropriately calculate the metrics, ensure that your output is in the follow
   
 - Composition prediction:
   - Single `.csv` file where the column headers should be:
+    - `neutrophil`
     - `epithelial`
     - `lymphocyte`
     - `plasma`
     - `eosinophil`
-    - `neutrophil`
     - `connective`
   - To make sure the calculation is done correctly, ensure that the row ordering is the same for both the ground truth and prediction csv files.
 
