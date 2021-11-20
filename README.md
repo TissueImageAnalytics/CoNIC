@@ -8,7 +8,7 @@ In this repository we provide code and example notebooks to assist participants 
 
 - Evaluation code
   - Segmentation & classification: multi-class panoptic quality
-  - Predicting cellular composition: multi-class coefficient of determination ($R^2$)
+  - Predicting cellular composition: multi-class coefficient of determination
 
 Stay tuned for example notebooks and baseline results!
 
