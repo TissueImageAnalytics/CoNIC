@@ -16,9 +16,7 @@ Options:
 from docopt import docopt
 import numpy as np
 import os
-import glob
 import pandas as pd
-import scipy.io as sio
 from tqdm.auto import tqdm
 
 from metrics.stats_utils import get_pq, get_multi_pq_info, get_multi_r2
@@ -37,34 +35,35 @@ if __name__ == "__main__":
 
     all_metrics = {}
     if mode == "seg_class":
+        # check to make sure input is a single numpy array
+        pred_format = pred_path.split(".")[-1]
+        true_format = true_path(".")[-1]
+        if pred_path != "npy" or true_format != "npy":
+            raise ValueError("pred and true must be in npy format.")
+
         # initialise empty placeholder lists
         pq_list = []
         mpq_info_list = []
-        # get the path of directory containing the results
-        pred_target = os.path.join(pred_path)
-        # get the path of directory containing the ground truth
-        true_target = os.path.join(true_path)
+        # load the prediction and ground truth arrays
+        pred_array = np.load(pred_path)
+        true_array = np.load(true_path)
 
-        # get the results - assume results to be .mat
-        list_preds = glob.glob(pred_target + "/*.mat")
-        for pred_file in tqdm(list_preds):
+        nr_patches = pred_array.shape[0]
+
+        for patch_idx in tqdm(range(nr_patches)):
             metrics_names = ["pq", "multi_pq"]
-            basename = os.path.basename(pred_file)
-            basename = basename.split(".")[0]
-
-            # assuming that result and ground truth file types are the same
-            true_file = true_target + "/" + basename + ".mat"
 
             # load the respective mat files
-            pred = sio.loadmat(pred_file)
-            true = sio.loadmat(true_file)
+            pred = pred_array[patch_idx]
+            true = true_array[patch_idx]
+
+            pred_inst = pred[..., 0]
+            pred_class = pred[..., 1]
+            ##
+            true_inst = true[..., 0]
+            true_class = true[..., 1]
 
             # ===============================================================
-            #! get the results and ground truth instance map
-            pred_inst = pred["inst_map"]
-            true_inst = true["inst_map"]
-            pred_class = pred["inst_type"]
-            true_class = true["class"]
 
             for idx, metric in enumerate(metrics_names):
                 if metric == "pq":
@@ -112,14 +111,13 @@ if __name__ == "__main__":
                 all_metrics[metric] = [np.mean(mpq_metrics)]
             else:
                 all_metrics[metric] = [pq_metrics_avg[idx]]
-        # ----------------
 
     else:
         # first check to make sure ground truth and prediction is in csv format
         if not os.path.isfile(true_path) or not os.path.isfile(pred_path):
             raise ValueError("pred and true must be in csv format.")
 
-        pred_format = pred.split(".")[-1]
+        pred_format = pred_path.split(".")[-1]
         true_format = true_path(".")[-1]
         if pred_path != "csv" or true_format != "csv":
             raise ValueError("pred and true must be in csv format.")

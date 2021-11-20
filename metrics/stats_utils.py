@@ -3,6 +3,8 @@ import numpy as np
 from scipy.optimize import linear_sum_assignment
 from sklearn.metrics import r2_score
 
+from misc.utils import remap_label
+
 
 def get_multi_pq_info(true, pred, nr_classes=6, match_iou=0.5):
     """Get the statistical information needed to compute multi-class PQ.
@@ -23,39 +25,23 @@ def get_multi_pq_info(true, pred, nr_classes=6, match_iou=0.5):
 
     assert match_iou >= 0.0, "Cant' be negative"
 
-    true_inst = true["inst_map"]
-    pred_inst = pred["inst_map"]
+    true_inst = true[..., 0]
+    pred_inst = pred[..., 0]
     ###
-    true_classes = true["class"]
-    pred_classes = pred["inst_type"]
-    ###
-    true_id = true["id"]
-    pred_id = pred["inst_uid"]
+    true_class = true[..., 1]
+    pred_class = pred[..., 1]
 
     pq = []
     for idx in range(nr_classes):
-        true_inst_oneclass = np.zeros([true_inst.shape[0], true_inst.shape[1]])
-        pred_inst_oneclass = np.zeros([pred_inst.shape[0], pred_inst.shape[1]])
-        class_idx = idx + 1
-        sel_true = true_id[true_classes == class_idx]
-        sel_pred = pred_id[pred_classes == class_idx]
-        ###
-        unq1 = np.unique(true_inst)
-        count = 1
-        for true_val in sel_true:
-            true_inst_tmp = true_inst == true_val
-            true_inst_oneclass[true_inst_tmp] = count
-            count += 1
-        count = 1
-        for pred_val in sel_pred:
-            pred_inst_tmp = pred_inst == pred_val
-            pred_inst_oneclass[pred_inst_tmp] = count
-            count += 1
+        pred_class_tmp = pred_class == idx + 1
+        pred_inst_oneclass = pred_inst * pred_class_tmp
+        pred_inst_oneclass = remap_label(pred_inst_oneclass)
+        ##
+        true_class_tmp = true_class == idx + 1
+        true_inst_oneclass = true_inst * true_class_tmp
+        true_inst_oneclass = remap_label(true_inst_oneclass)
 
-        true_unique = np.unique(true_inst_oneclass).tolist()[1:]
-        pq_oneclass_info = get_pq(
-            true_inst_oneclass, pred_inst_oneclass, remap=False, inst_map=True
-        )
+        pq_oneclass_info = get_pq(true_inst_oneclass, pred_inst_oneclass, remap=False)
 
         # add (in this order) tp, fp, fn iou_sum
         pq_oneclass_stats = [
@@ -69,7 +55,7 @@ def get_multi_pq_info(true, pred, nr_classes=6, match_iou=0.5):
     return pq
 
 
-def get_pq(true, pred, match_iou=0.5, remap=True, inst_map=True):
+def get_pq(true, pred, match_iou=0.5, remap=True):
     """`match_iou` is the IoU threshold level to determine the pairing between
     GT instances `p` and prediction instances `g`. `p` and `g` is a pair
     if IoU > `match_iou`. However, pair of `p` and `g` must be unique 
@@ -95,9 +81,6 @@ def get_pq(true, pred, match_iou=0.5, remap=True, inst_map=True):
                     
     """
     assert match_iou >= 0.0, "Cant' be negative"
-    if inst_map is False:
-        pred = pred["inst_map"]
-        true = true["inst_map"]
     # ensure instance maps are contiguous
     if remap:
         pred = remap_label(pred)
@@ -209,26 +192,20 @@ def get_multi_r2(true, pred):
     ]
     # iterating the columns
     for col in true.columns:
-        if col not in class_names or col != "filename":
+        if col not in class_names:
             raise ValueError("%s column header not recognised")
 
     for col in pred.columns:
-        if col not in class_names or col != "filename":
+        if col not in class_names:
             raise ValueError("%s column header not recognised")
 
     true_filenames = true["filename"]
 
     r2_list = []
     for class_ in class_names:
-        pred_counts = []
-        true_counts = []
-        for true_filename in true_filenames:
-            pred_subset = pred[pred["filename"] == true_filename]
-            pred_counts.append(pred_subset[class_])
-
-            true_subset = true[true["filename"] == true_filename]
-            true_counts.append(true_subset[class_])
-        r2_list.append(r2_score(true_counts, pred_counts))
+        true_oneclass = true[class_].tolist()
+        pred_oneclass = pred[class_].tolist()
+        r2_list.append(r2_score(true_oneclass, pred_oneclass))
 
     return np.mean(np.array(r2_list))
 

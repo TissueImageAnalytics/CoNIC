@@ -16,10 +16,10 @@ Stay tuned for example notebooks and baseline results!
 
 To appropriately calculate the metrics, ensure that your output is in the following format:
 
-- Segmentation and classification:
-  - Instance segmentation map:
-    - `.npy` array of size Nx256x256, where N is the number of processed patches. For each patch, values should range from 0 (background) to n (number of nuclei).
-    - `.npy` array of size Nx256x256, where N is the number of processed patches. For each patch, values should range from 0 (background) to 6 (number of classes in the dataset).
+- Instance Segmentation and classification map:
+    - `.npy` array of size Nx256x256x2, where N is the number of processed patches.
+    - First channel is the instance segmentation map containing values ranging from 0 (background) to n (number of nuclei).
+    - Second channel is the classification map containing values ranging from 0 (background) to 6 (number of classes in the dataset).
   
 - Composition prediction:
   - Single `.csv` file where the column headers should be:

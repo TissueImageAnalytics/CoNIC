@@ -97,6 +97,7 @@ if __name__ == "__main__":
     img_array = np.array(img_list).astype("uint8")
     inst_map_array = np.array(inst_map_list).astype("int32")
     class_map_array = np.array(class_map_list).astype("int32")
+    label_array = np.dstack([inst_map_array, class_map_array])
     nuclei_counts_array = np.array(nuclei_counts_list).astype("int32")
 
     # convert counts to pandas dataframe
@@ -113,7 +114,6 @@ if __name__ == "__main__":
 
     # save output
     np.save(out_dir + "images.npy", img_array)
-    np.save(out_dir + "instance_map.npy", inst_map_array)
-    np.save(out_dir + "class_map.npy", class_map_array)
+    np.save(out_dir + "labels.npy", label_array)
     nuclei_counts_df.to_csv(out_dir + "counts.csv", index=False)
 
