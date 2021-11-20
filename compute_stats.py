@@ -1,9 +1,9 @@
 """compute_stats.py. Calculates the statistical measurements for the CoNIC Challenge.
 
 Usage:
-	compute_stats.py [--mode=<str>] [--pred=<path>] [--true=<path>]
-	compute_stats.py (-h | --help)
-	compute_stats.py --version
+    compute_stats.py [--mode=<str>] [--pred=<path>] [--true=<path>]
+    compute_stats.py (-h | --help)
+    compute_stats.py --version
 
 Options:
     -h --help                   Show this string.
@@ -11,7 +11,7 @@ Options:
     --mode=<str>                Choose either `regression` or `seg_class`.
     --pred=<path>               Path to the results directory.
     --true=<path>               Path to the ground truth directory.
- 
+
 """
 
 from docopt import docopt
