@@ -3,20 +3,23 @@ import numpy as np
 from scipy.optimize import linear_sum_assignment
 from sklearn.metrics import r2_score
 
-from misc.utils import remap_label
+from misc.utils import remap_label, get_bounding_box
 
 
 def get_multi_pq_info(true, pred, nr_classes=6, match_iou=0.5):
     """Get the statistical information needed to compute multi-class PQ.
     
     CoNIC multiclass PQ is achieved by considering nuclei over all images at the same time, 
-    rather than averaging image-level results, like was done in MoNuSAC.
+    rather than averaging image-level results, like was done in MoNuSAC. This overcomes issues
+    when a nuclear category is not present in a particular image.
     
     Args:
-        true: Ground truth map
-        pred: Prediction map
-        nr_classes: number of classes considered in the dataset.
-        match_iou: IoU threshold for determining whether there is a detection.
+        true (ndarray): HxWx2 array. First channel is the instance segmentation map
+            and the second channel is the classification map. 
+        pred: HxWx2 array. First channel is the instance segmentation map
+            and the second channel is the classification map. 
+        nr_classes (int): Number of classes considered in the dataset. 
+        match_iou (float): IoU threshold for determining whether there is a detection.
     
     Returns:
         statistical info per class needed to compute PQ.
@@ -56,21 +59,25 @@ def get_multi_pq_info(true, pred, nr_classes=6, match_iou=0.5):
 
 
 def get_pq(true, pred, match_iou=0.5, remap=True):
-    """`match_iou` is the IoU threshold level to determine the pairing between
-    GT instances `p` and prediction instances `g`. `p` and `g` is a pair
-    if IoU > `match_iou`. However, pair of `p` and `g` must be unique 
-    (1 prediction instance to 1 GT instance mapping).
-
-    If `match_iou` < 0.5, Munkres assignment (solving minimum weight matching
-    in bipartite graphs) is caculated to find the maximal amount of unique pairing. 
-
-    If `match_iou` >= 0.5, all IoU(p,g) > 0.5 pairing is proven to be unique and
-    the number of pairs is also maximal.    
+    """Get the panoptic quality result. 
     
-    Fast computation requires instance IDs are in contiguous orderding 
-    i.e [1, 2, 3, 4] not [2, 3, 6, 10]. Please call `remap_label` beforehand 
-    and `by_size` flag has no effect on the result.
+    Fast computation requires instance IDs are in contiguous orderding i.e [1, 2, 3, 4] 
+    not [2, 3, 6, 10]. Please call `remap_label` beforehand. Here, the `by_size` flag 
+    has no effect on the result.
 
+    Args:
+        true (ndarray): HxW ground truth instance segmentation map
+        pred (ndarray): HxW predicted instance segmentation map
+        match_iou (float): IoU threshold level to determine the pairing between
+            GT instances `p` and prediction instances `g`. `p` and `g` is a pair
+            if IoU > `match_iou`. However, pair of `p` and `g` must be unique 
+            (1 prediction instance to 1 GT instance mapping). If `match_iou` < 0.5, 
+            Munkres assignment (solving minimum weight matching in bipartite graphs) 
+            is caculated to find the maximal amount of unique pairing. If 
+            `match_iou` >= 0.5, all IoU(p,g) > 0.5 pairing is proven to be unique and
+            the number of pairs is also maximal.  
+        remap (bool): whether to ensure contiguous ordering of instances.
+    
     Returns:
         [dq, sq, pq]: measurement statistic
 
@@ -174,8 +181,8 @@ def get_multi_r2(true, pred):
     average the results.
     
     Args:
-        true: dataframe indicating the nuclei counts for each image and category.
-        pred: dataframe indicating the nuclei counts for each image and category.
+        true (pd.DataFrame): dataframe indicating the nuclei counts for each image and category.
+        pred (pd.DataFrame): dataframe indicating the nuclei counts for each image and category.
     
     Returns:
         multi class coefficient of determination
@@ -190,7 +197,6 @@ def get_multi_r2(true, pred):
         "eosinophil",
         "connective",
     ]
-    # iterating the columns
     for col in true.columns:
         if col not in class_names:
             raise ValueError("%s column header not recognised")
@@ -199,8 +205,7 @@ def get_multi_r2(true, pred):
         if col not in class_names:
             raise ValueError("%s column header not recognised")
 
-    true_filenames = true["filename"]
-
+    # for each class, calculate r2 and then take the average
     r2_list = []
     for class_ in class_names:
         true_oneclass = true[class_].tolist()
@@ -208,24 +213,3 @@ def get_multi_r2(true, pred):
         r2_list.append(r2_score(true_oneclass, pred_oneclass))
 
     return np.mean(np.array(r2_list))
-
-
-def get_bounding_box(img):
-    """Get the bounding box coordinates of a binary input- assumes a single object.
-    
-    Args:
-        img: input binary image.
-    
-    Returns:
-        bounding box coordinates
-        
-    """
-    rows = np.any(img, axis=1)
-    cols = np.any(img, axis=0)
-    rmin, rmax = np.where(rows)[0][[0, -1]]
-    cmin, cmax = np.where(cols)[0][[0, -1]]
-    # due to python indexing, need to add 1 to max
-    # else accessing will be 1px in the box, not out
-    rmax += 1
-    cmax += 1
-    return [rmin, rmax, cmin, cmax]

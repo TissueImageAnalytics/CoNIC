@@ -11,12 +11,13 @@ class PatchExtractor(object):
     Turn on debug mode to see how it is done.
 
     Args:
-        x         : input image, should be of shape HWC
-        win_size  : a tuple of (h, w)
-        step_size : a tuple of (h, w)
-        debug     : flag to see how it is done
-    Return:
-        a list of sub patches, each patch has dtype same as x
+        x: input image, should be of shape HWC
+        win_size: a tuple of (h, w).
+        step_size: a tuple of (h, w).
+        debug: flag to see how it is done.
+        
+    Returns:
+        a list of sub patches, each patch has dtype same as x.
 
     Examples:
         >>> xtractor = PatchExtractor(450, 120)
@@ -63,11 +64,12 @@ class PatchExtractor(object):
         There will be 1 additional patch extracted at the bottom-right corner.
 
         Args:
-            x         : input image, should be of shape HWC
-            win_size  : a tuple of (h, w)
-            step_size : a tuple of (h, w)
-        Return:
-            a list of sub patches, each patch is same dtype as x
+            x: input image, should be of shape HWC.
+            win_size: a tuple of (h, w).
+            step_size: a tuple of (h, w).
+            
+        Returns:
+            a list of sub patches, each patch is same dtype as x.
 
         """
         im_h = x.shape[0]
@@ -111,11 +113,12 @@ class PatchExtractor(object):
         image while all patches' central region cover the whole orginal image.
 
         Args:
-            x         : input image, should be of shape HWC
-            win_size  : a tuple of (h, w)
-            step_size : a tuple of (h, w)
-        Return:
-            a list of sub patches, each patch is same dtype as x
+            x: input image, should be of shape HWC.
+            win_size: a tuple of (h, w).
+            step_size: a tuple of (h, w).
+            
+        Returns:
+            a list of sub patches, each patch is same dtype as x.
             
         """
         diff_h = self.win_size[0] - self.step_size[0]
@@ -132,11 +135,15 @@ class PatchExtractor(object):
         return sub_patches
 
     def extract(self, x, patch_type):
-        """patch_type:
-            'valid' extract patches without reflection at boundary. However, 
+        """Extract the patches.
+        
+        Args:
+            x: input array to extract patches from.
+            patch_type:
+                'valid' extract patches without reflection at boundary. However, 
                     in case the img size < patch size, the img will be mirror-padded 
-                    to fit a single patch
-            'mirror' extract patches with mirror padding at boundary.
+                    to fit a single patch.
+                'mirror' extract patches with mirror padding at boundary.
 
         """
         patch_type = patch_type.lower()
@@ -159,3 +166,12 @@ class PatchExtractor(object):
             assert False, "Unknown Patch Type [%s]" % patch_type
         return
 
+
+# ----------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    # example for debug
+    xtractor = PatchExtractor((256, 256), (128, 128), debug=True)
+    a = np.full([1200, 1200, 3], 255, np.uint8)
+    xtractor.extract(a, "mirror")
+    xtractor.extract(a, "valid")

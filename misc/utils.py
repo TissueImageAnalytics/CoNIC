@@ -11,10 +11,13 @@ def remap_label(pred, by_size=False):
     so that bigger nucler has smaller ID.
 
     Args:
-        pred    : the 2d array contain instances where each instances is marked
-                  by non-zero integer
-        by_size : renaming with larger nuclei has smaller id (on-top)
+        pred (ndarray): the 2d array contain instances where each instances is marked
+            by non-zero integer.
+        by_size (bool): renaming such that larger nuclei have a smaller id (on-top).
 
+    Returns:
+        new_pred (ndarray): Array with continguous ordering of instances.
+        
     """
     pred_id = list(np.unique(pred))
     pred_id.remove(0)
@@ -37,6 +40,7 @@ def remap_label(pred, by_size=False):
 
 
 def cropping_center(x, crop_shape, batch=False):
+    """Crop an array at the centre with specified dimensions."""
     orig_shape = x.shape
     if not batch:
         h0 = int((orig_shape[0] - crop_shape[0]) * 0.5)
@@ -50,9 +54,14 @@ def cropping_center(x, crop_shape, batch=False):
 
 
 def recur_find_ext(root_dir, ext_list):
-    """Recursively find all files in directories end with the `ext`
-    such as `ext='.png'`.
-    return list is sorted.
+    """Recursively find all files in directories end with the `ext` such as `ext='.png'`.
+    
+    Args:
+        root_dir (str): Root directory to grab filepaths from.
+        ext_list (list): File extensions to consider.
+        
+    Returns:
+        file_path_list (list): sorted list of filepaths.
     """
     file_path_list = []
     for cur_path, dir_list, file_list in os.walk(root_dir):
@@ -66,6 +75,28 @@ def recur_find_ext(root_dir, ext_list):
 
 
 def rm_n_mkdir(dir_path):
+    """Remove and then make a new directory."""
     if os.path.isdir(dir_path):
         shutil.rmtree(dir_path)
     os.makedirs(dir_path)
+
+
+def get_bounding_box(img):
+    """Get the bounding box coordinates of a binary input- assumes a single object.
+    
+    Args:
+        img: input binary image.
+    
+    Returns:
+        bounding box coordinates
+        
+    """
+    rows = np.any(img, axis=1)
+    cols = np.any(img, axis=0)
+    rmin, rmax = np.where(rows)[0][[0, -1]]
+    cmin, cmax = np.where(cols)[0][[0, -1]]
+    # due to python indexing, need to add 1 to max
+    # else accessing will be 1px in the box, not out
+    rmax += 1
+    cmax += 1
+    return [rmin, rmax, cmin, cmax]
