@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="conic_banner.png">
+  <img src="doc/conic_banner.png">
 </p>
 
 # CoNIC: Colon Nuclei Identification and Counting Challenge
