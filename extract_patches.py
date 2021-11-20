@@ -17,9 +17,7 @@ from misc.utils import rm_n_mkdir, cropping_center, recur_find_ext, remap_label
 if __name__ == "__main__":
 
     win_size = 256  # should keep this the same!
-    step_size = (
-        256  # decrease this to have a larger overlap between neighbouring patches
-    )
+    step_size = 256  # decrease this to have a larger overlap between patches
     extract_type = "valid"
     img_dir = "/Users/simongraham/Desktop/data/MTL_Data/Nuclei/Images/"
     ann_dir = "/Users/simongraham/Desktop/data/MTL_Data/Nuclei/Labels/"
@@ -42,6 +40,7 @@ if __name__ == "__main__":
     inst_map_list = []
     class_map_list = []
     nuclei_counts_list = []
+    patch_names_list = []
     for file_idx, file_path in enumerate(file_path_list):
         basename = pathlib.Path(file_path).stem
 
@@ -86,6 +85,7 @@ if __name__ == "__main__":
             inst_map_list.append(patch_inst)
             class_map_list.append(patch_class)
             nuclei_counts_list.append(nuclei_counts_perclass)
+            patch_names_list.append("%s-%04d" % (basename, idx))
 
             assert patch.shape[0] == win_size
             assert patch.shape[1] == win_size
@@ -95,12 +95,16 @@ if __name__ == "__main__":
 
     # convert to numpy array
     img_array = np.array(img_list).astype("uint8")
-    inst_map_array = np.array(inst_map_list).astype("int32")
-    class_map_array = np.array(class_map_list).astype("int32")
-    label_array = np.dstack([inst_map_array, class_map_array])
-    nuclei_counts_array = np.array(nuclei_counts_list).astype("int32")
+    inst_map_array = np.array(inst_map_list).astype("uint16")
+    class_map_array = np.array(class_map_list).astype("uint16")
+    nuclei_counts_array = np.array(nuclei_counts_list).astype("uint16")
 
-    # convert counts to pandas dataframe
+    # combine instance map and classification map to form single array
+    inst_map_array = np.expand_dims(inst_map_array, -1)
+    class_map_array = np.expand_dims(class_map_array, -1)
+    labels_array = np.concatenate((inst_map_array, class_map_array), axis=-1)
+
+    # convert to pandas dataframe
     nuclei_counts_df = pd.DataFrame(
         data={
             "neutrophil": nuclei_counts_array[:, 0],
@@ -111,9 +115,11 @@ if __name__ == "__main__":
             "connective": nuclei_counts_array[:, 5],
         }
     )
+    patch_names_df = pd.DataFrame(data={"patch_info": patch_names_list})
 
     # save output
     np.save(out_dir + "images.npy", img_array)
-    np.save(out_dir + "labels.npy", label_array)
+    np.save(out_dir + "labels.npy", labels_array)
     nuclei_counts_df.to_csv(out_dir + "counts.csv", index=False)
+    patch_names_df.to_csv(out_dir + "patch_info.csv", index=False)
 
