@@ -7,8 +7,10 @@
 In this repository we provide code and example notebooks to assist participants start their algorithm development for the CoNIC challenge. In particular we provide:
 
 - Evaluation code
-  - Segmentation & classification: multi-class panoptic quality
-  - Predicting cellular composition: multi-class coefficient of determination
+  - Segmentation & classification: multi-class panoptic quality (mPQ<sup>+</sup>)
+  - Predicting cellular composition: multi-class coefficient of determination (R<sup>2</sup>)
+
+We calculate 
 
 Stay tuned for example notebooks and baseline results!
 

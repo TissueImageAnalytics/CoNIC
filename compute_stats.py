@@ -36,7 +36,7 @@ if __name__ == "__main__":
     pred_path = args["--pred"]
     true_path = args["--true"]
 
-    seg_metrics_names = ["pq", "multi_pq"]
+    seg_metrics_names = ["pq", "multi_pq+"]
     reg_metrics_names = ["r2"]
 
     # do initial checks
@@ -80,7 +80,7 @@ if __name__ == "__main__":
                     pq = get_pq(true_inst, pred_inst)
                     pq = pq[0][2]
                     pq_list.append(pq)
-                elif metric == "multi_pq":
+                elif metric == "multi_pq+":
                     # get the multiclass pq stats info from single image
                     mpq_info_single = get_multi_pq_info(true, pred)
                     mpq_info = []
@@ -97,13 +97,13 @@ if __name__ == "__main__":
 
         pq_metrics = np.array(pq_list)
         pq_metrics_avg = np.mean(pq_metrics, axis=-1)  # average over all images
-        if "multi_pq" in seg_metrics_names:
+        if "multi_pq+" in seg_metrics_names:
             mpq_info_metrics = np.array(mpq_info_list, dtype="float")
             # sum over all the images
             total_mpq_info_metrics = np.sum(mpq_info_metrics, axis=0)
 
         for idx, metric in enumerate(seg_metrics_names):
-            if metric == "multi_pq":
+            if metric == "multi_pq+":
                 mpq_list = []
                 # for each class, get the multiclass PQ
                 for cat_idx in range(total_mpq_info_metrics.shape[0]):
