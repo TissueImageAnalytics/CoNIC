@@ -58,8 +58,8 @@ if __name__ == "__main__":
         pred_array = np.load(pred_path)
         true_array = np.load(true_path)
 
-        pred_array = pred_array[:20]
-        true_array = true_array[:20]
+        pred_array = pred_array[:100]
+        true_array = true_array[:100]
 
         nr_patches = pred_array.shape[0]
 
