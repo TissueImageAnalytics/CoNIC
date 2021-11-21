@@ -49,7 +49,7 @@ def get_multi_pq_info(true, pred, nr_classes=6, match_iou=0.5):
         # add (in this order) tp, fp, fn iou_sum
         pq_oneclass_stats = [
             pq_oneclass_info[1][0],
-            pq_oneclass_info[1][3],
+            pq_oneclass_info[1][1],
             pq_oneclass_info[1][2],
             pq_oneclass_info[2],
         ]
@@ -171,7 +171,7 @@ def get_pq(true, pred, match_iou=0.5, remap=True):
 
     return (
         [dq, sq, dq * sq],
-        [paired_true, paired_pred, unpaired_true, unpaired_pred],
+        [tp, fp, fn],
         paired_iou.sum(),
     )
 

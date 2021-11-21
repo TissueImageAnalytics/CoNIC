@@ -89,9 +89,9 @@ if __name__ == "__main__":
                     mpq_info = []
                     # aggregate the stat info per class
                     for single_class_pq in mpq_info_single:
-                        tp = len(single_class_pq[0])
-                        fp = len(single_class_pq[1])
-                        fn = len(single_class_pq[2])
+                        tp = single_class_pq[0]
+                        fp = single_class_pq[1]
+                        fn = single_class_pq[2]
                         sum_iou = single_class_pq[3]
                         mpq_info.append([tp, fp, fn, sum_iou])
                     mpq_info_list.append(mpq_info)
