@@ -10,9 +10,10 @@ In this repository we provide code and example notebooks to assist participants 
   - Segmentation & classification: multi-class panoptic quality (mPQ<sup>+</sup>)
   - Predicting cellular composition: multi-class coefficient of determination (R<sup>2</sup>)
 
-We calculate 
+- Example notebooks
+  - Data reading and simple dataset statistics
 
-Stay tuned for example notebooks and baseline results!
+Stay tuned for additional example notebooks and baseline results!
 
 ## Output format for metric calculation
 
