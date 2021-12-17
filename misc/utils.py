@@ -17,7 +17,7 @@ def remap_label(pred, by_size=False):
 
     Returns:
         new_pred (ndarray): Array with continguous ordering of instances.
-        
+
     """
     pred_id = list(np.unique(pred))
     pred_id.remove(0)
@@ -53,13 +53,26 @@ def cropping_center(x, crop_shape, batch=False):
     return x
 
 
+def rm_n_mkdir(dir_path):
+    """Remove and make directory."""
+    if os.path.isdir(dir_path):
+        shutil.rmtree(dir_path)
+    os.makedirs(dir_path)
+
+
+def rmdir(dir_path):
+    if os.path.isdir(dir_path):
+        shutil.rmtree(dir_path)
+    return
+
+
 def recur_find_ext(root_dir, ext_list):
     """Recursively find all files in directories end with the `ext` such as `ext='.png'`.
-    
+
     Args:
         root_dir (str): Root directory to grab filepaths from.
         ext_list (list): File extensions to consider.
-        
+
     Returns:
         file_path_list (list): sorted list of filepaths.
     """
@@ -83,13 +96,13 @@ def rm_n_mkdir(dir_path):
 
 def get_bounding_box(img):
     """Get the bounding box coordinates of a binary input- assumes a single object.
-    
+
     Args:
         img: input binary image.
-    
+
     Returns:
         bounding box coordinates
-        
+
     """
     rows = np.any(img, axis=1)
     cols = np.any(img, axis=0)
