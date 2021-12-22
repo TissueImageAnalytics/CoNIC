@@ -13,7 +13,7 @@ In this repository we provide code and example notebooks to assist participants 
 - Example notebooks
   - Data reading and simple dataset statistics
 
-Stay tuned for additional example notebooks and baseline results!
+**NEWS: We have now released the training code that we used to train the baseline method (HoVer-Net). For this, we created a new branch, named `conic` in the original HoVer-Net repository. Click on [this link](https://github.com/vqdang/hover_net/tree/conic) to access the code!**
 
 ## Output format for metric calculation
 
