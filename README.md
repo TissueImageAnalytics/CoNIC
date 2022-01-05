@@ -39,13 +39,13 @@ To appropriately calculate the metrics, ensure that your output is in the follow
   To get the stats for segmentation and classification, run:
 
   ```
-  python compute_stats.py --mode=seg_class --results=<path_to_results> --ground_truth=<path_to_ground_truth>
+  python compute_stats.py --mode=seg_class --pred=<path_to_results> --true=<path_to_ground_truth>
   ```
   
   To get the stats for cellular composition prediction, run:
 
   ```
-  python compute_stats.py --mode=regression --results=<path_to_results> --ground_truth=<path_to_ground_truth>
+  python compute_stats.py --mode=regression --pred=<path_to_results> --true=<path_to_ground_truth>
   ```
 
   
