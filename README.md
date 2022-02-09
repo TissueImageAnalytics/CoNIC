@@ -1,1 +1,1 @@
-# Docker Template
+# Docker template for CoNIC
