@@ -17,7 +17,7 @@ DOCKER_ENTRY = {
 # ! USER SPECIFIC
 # <<<<<<<<<<<<<<<<<<<<<<<<<
 LOCAL_ENTRY = {
-    "input_dir": "/mnt/storage_0/workspace/nuclei/conic-challenge/exp_output/local/data/valid",
+    "input_dir": "/mnt/storage_0/workspace/nuclei/conic-challenge/exp_output/local/data/valid/",
     "output_dir": "/mnt/storage_0/workspace/nuclei/conic-challenge/exp_output/dump/",
     "user_data_dir": "/mnt/storage_0/workspace/nuclei/conic-challenge/docker/inference/data/"
 }
