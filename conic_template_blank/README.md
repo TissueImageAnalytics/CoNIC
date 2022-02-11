@@ -86,7 +86,11 @@ docker run \
 The docker container, similar to Grand-Challenge platform, expects the input to be in form a `.mha` image file. To be able to test your docker containers, we have provided a sample `.mha` file [here]() so you can download and and put in your desired directory to be used for testing. If the testing goes well, dockerized algorithm should save the output in the created `conic-output` volume or any other user-specific results should be shown on the screen. Note that `--memory` argument should be set based on your system specifications.
 
 ### 5- Exporting the docker container
-
+Assuming that you have passed all the previous steps successfully, you should be able to easily export your docker image in compressed format which is the requirement for Grand-Challenge platform. This is done by calling `export.sh` bash script:
+```bash
+sudo ./export.sh
+```
+Note that you will need the `gzip` library installed if you want to successfully run this script.
 
 ===========================================================================
 
