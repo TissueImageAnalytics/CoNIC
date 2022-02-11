@@ -135,24 +135,32 @@ Then you will be directed to the "Create Algorithm" page where you have to fill 
 - Image requires gpu: make sure to enable (check) the use of GPU if your algorithm needs one.
 - Image requires memory gb: Specify how much RAM your algorithm requires to run. The maximum amount allowed is 32.
 
-Once you have completed these required fields, press the "**Save**" botton at the bottom of the page to create the algorithm and direct to the algorithm page:
-
-<p align="center">
-<img src="/doc/task2_input_output.JPG">
-</p>
-
-There you can see the informatin regarding you algorith and you can choose to change that information using "**Update Setting**" bottom if needed. Before you can use this algorithm for a challenge submission, you have to assign/upload your dockerized algorithm to it. To do so, click on the "**Containers**" tab from the left menu:
+Once you have completed these required fields, press the "**Save**" botton at the bottom of the page to create the algorithm and direct to the algorithm page where you can see the information regarding you algorithm and change them using "**Update Setting**" button if needed. Before you can use this algorithm for a challenge submission, you have to assign/upload your dockerized algorithm to it. To do so, click on the "**Containers**" tab from the left menu:
 
 <p align="center">
 <img src="/doc/algorithm_page.JPG">
 </p>
 
-Then, you have to click on the ![]("/doc/upload_container_botton.JPG") to navigate to the page where you can upload the packaged (compressed) docker container:
+Then, you have to click on the ![Upload Container](/doc/upload_container_botton.JPG) to navigate to the page where you can upload the packaged (compressed) docker container:
 
 <p align="center">
 <img src="/doc/container_upload.JPG">
 </p>
 
-Once you have uploaded your docker container and set the "GPU Supported" and "Requires memory gb" options (as explained before), click on the "Save" button and your algorithm will be completed and ready to be submitted to the challenge.
+Once you have uploaded your docker container and set the "GPU Supported" and "Requires memory gb" options (as explained before), click on the "Save" button and your algorithm will be completed and ready to be submitted to the challenge. Remember, the algorithm is only ready to submit when the status badge in front of upload description changes to "Active".
 
 ### 2- Submit your algorithm
+In the CoNIC challenge, we have two tasks (Task 1: cell segmentation and classification, Task 2: Cellular composition prediction) and for each tasks partcipant compete in two phases (Preliminary test phase, Final test phase). The important phase on which participant are ranked is Phase 2 for both tasks, however, participants are encouraged to submit their algorithm to the preliminary phase as well to evaluate their method and check for sanity of dockerized algorithms.
+To start with your submission, for each task on either phases, you have to navigate to the challenge ["Submission" page](https://conic-challenge.grand-challenge.org/evaluation/challenge/submissions/create/):
+
+<p align="center">
+<img src="/doc/submissions.JPG">
+</p>
+
+on the top region you can select for which phase and task you are submitting your method. Assuming that we have created the our "CoNIC Tutorial" algorithm for Task 1 and the fact we want to test it on the preliminary test phase, we select the ![task1_submit](/doc/task1_submit.JPG) tab.
+
+<p align="center">
+<img src="/doc/submit_algorithm.jpg">
+</p>
+
+The most important thing here is to select the algorithm you created for this task from the "**Algorithms**" list. You can also write comments about the submitted algorithm. Also, if you are submiting an algorithm for one of the tasks in the "Final Test Phase", it is mandetory to past a link to the ArXiv manuscript in which you have explained the technical details of your algorithm in the **Preprint (Algorithm Description)** field. Finally, by hitting the "Save" button you are submit your algorith for evaluation on the challenges task. The process is the same for both tasks and phases.
