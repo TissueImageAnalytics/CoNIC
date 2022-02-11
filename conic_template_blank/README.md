@@ -9,7 +9,7 @@ This repository contains everything participants need to dockerize their algorit
 - [Dockerize Your Algorithm](#dockerize-your-algorithm)
 - [Submit Your Algorithm](#submit-your-algorithm)
 
-As we only accept the dockerized algorithm submissions on the CoNIC challenge and because the Grand-Challenge platform (challenge host) only works with dockerized containers that have a certain structure, you need to follow the guidelines in this document to have a successful submission to the challenge. General guidelines are the same for both "Task 1: Nuclear segmentation and classification" and "Task 2: Prediction of cellular composition" parts of the CoNIC challenge and can be used for both "Preliminary" and "Final" test phases (read more about challenge formate [here](https://conic-challenge.grand-challenge.org/)).
+As we only accept the dockerized algorithm submissions on the CoNIC challenge and because the Grand-Challenge platform (challenge host) only works with dockerized containers that have a certain structure, you need to follow the guidelines in this document to have a successful submission to the challenge. General guidelines are the same for both "Task 1: Nuclear segmentation and classification" and "Task 2: Prediction of cellular composition" parts of the CoNIC challenge and can be used for both "Preliminary" and "Final" test phases (read more about challenge format [here](https://conic-challenge.grand-challenge.org/)).
 
 
 ## Dockerize Your Algorithm
