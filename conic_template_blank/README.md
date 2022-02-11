@@ -157,10 +157,10 @@ To start with your submission, for each task on either phases, you have to navig
 <img src="/doc/submissions.JPG">
 </p>
 
-on the top region you can select for which phase and task you are submitting your method. Assuming that we have created the our "CoNIC Tutorial" algorithm for Task 1 and the fact we want to test it on the preliminary test phase, we select the ![task1_submit](/doc/task1_submit.JPG) tab.
+on the top region you can select for which phase and task you are submitting your method. Assuming that we have created the our "CoNIC Tutorial" algorithm for Task 1 and the fact we want to test it on the preliminary test phase, we select the "**Segmentation and Classification - Preliminary Test**" tab.
 
 <p align="center">
 <img src="/doc/submit_algorithm.jpg">
 </p>
 
-The most important thing here is to select the algorithm you created for this task from the "**Algorithms**" list. You can also write comments about the submitted algorithm. Also, if you are submiting an algorithm for one of the tasks in the "Final Test Phase", it is mandetory to past a link to the ArXiv manuscript in which you have explained the technical details of your algorithm in the **Preprint (Algorithm Description)** field. Finally, by hitting the "Save" button you are submit your algorith for evaluation on the challenges task. The process is the same for both tasks and phases.
+The most important thing here is to select the algorithm you created for this task from the "**Algorithms**" list. You can also write comments about the submitted algorithm. Also, if you are submiting an algorithm for one of the tasks in the "Final Test Phase", it is mandetory to past a link to the ArXiv manuscript in which you have explained the technical details of your algorithm in the **Preprint (Algorithm Description)** field. Finally, by clicking on the "**Save**" button you will submit your algorith for evaluation on the challenges task. The process is the same for both tasks and phases.
