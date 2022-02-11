@@ -56,9 +56,13 @@ It is important to fully understand the expected format of algorithm output for 
  - Task 2 - Prediction of cellular composition: In this task participant are expected to generate JSON file for each type of cell which contains a list of the number of cells of that type in each image. Assuming the algorithm calculates a list of `N` items where item `n` in that list contains cellular composition of image at index `n` in the input (`input_array[n]`), there is template code in `main.py` which extract the cellular composition of each cell type and save it with appropriate JSON format.
 
 ### 3- Creating the docker container
+Once you have your algorithm ready according to the challenge template, you can use the `Dockerfile` template in the repository to containerize your algorithm. All the instruction you need are commented in the file, however, we explain the important parts of the files you need to change when creating your docker container:
 
-- `requirements.txt`: This file contains all python libraries that are required to
-    run your code
+- `Dockerfile`: This is the main file responsible for docker configuration. Please make sure not changing the code parts specified by `"# ! DO NOT MODIFY"` as these are preset configurations agreed to be used with Grand-challenge platform. However, you might need to `"# ! USER SPECIFIC"` regions. For example, you need to include your desired base image and linux packages to be installed at the top of the `Dockerfile`. It is recommended to install your desired python packages using the list `requirements.txt` list (explained below) instead of installing them one-by-one whithin the `Dockerfile`.
+- `requirements.txt`: This file contains a list of all python libraries that are required to run your code. Please make sure that you include every thing you need and this can be checked by testing your docker build locally (explained in the next section).
+- `build.sh`: Helper bash script to generate a docker container based on the provided `Dockerfile` in the directory. Remember, in order to run this script you need to have a working installation of Docker on you system.
+
+Basically, there are three easy steps to create your docker container when you have algorithm ready: First, you need to modify the `Dockerfile` and `requirements.txt` accourding to your needs and then run the `build.sh` bash script in your terminal to create the container. Next step is to test if the created container works as expected.
 
 ### 4- Testing the docker container
 Once you have verified they are installed correctly.
