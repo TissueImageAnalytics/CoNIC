@@ -135,5 +135,24 @@ Then you will be directed to the "Create Algorithm" page where you have to fill 
 - Image requires gpu: make sure to enable (check) the use of GPU if your algorithm needs one.
 - Image requires memory gb: Specify how much RAM your algorithm requires to run. The maximum amount allowed is 32.
 
-Once you have completed these required fields, press the "**Save**" botton at the bottom of the page the create your algorithm.
+Once you have completed these required fields, press the "**Save**" botton at the bottom of the page to create the algorithm and direct to the algorithm page:
+
+<p align="center">
+<img src="/doc/task2_input_output.JPG">
+</p>
+
+There you can see the informatin regarding you algorith and you can choose to change that information using "**Update Setting**" bottom if needed. Before you can use this algorithm for a challenge submission, you have to assign/upload your dockerized algorithm to it. To do so, click on the "**Containers**" tab from the left menu:
+
+<p align="center">
+<img src="/doc/algorithm_page.JPG">
+</p>
+
+Then, you have to click on the ![]("/doc/upload_container_botton.JPG") to navigate to the page where you can upload the packaged (compressed) docker container:
+
+<p align="center">
+<img src="/doc/container_upload.JPG">
+</p>
+
+Once you have uploaded your docker container and set the "GPU Supported" and "Requires memory gb" options (as explained before), click on the "Save" button and your algorithm will be completed and ready to be submitted to the challenge.
+
 ### 2- Submit your algorithm
