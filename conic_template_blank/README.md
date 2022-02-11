@@ -6,8 +6,8 @@
 
 This repository contains everything participants need to dockerize their algorithms for CoNIC challenge. In this README, you will learn about this repository structure and how you should use it for your submissions to CoNIC challenge. There are two main sections covered in this guide:
 
-- [Algorithm dockerization](#dockerize-your-algorithm)
-- [Dockerized algorithm submission](#submit-your-algorithm)
+- [Dockerize Your Algorithm](#dockerize-your-algorithm)
+- [Submit Your Algorithm](#submit-your-algorithm)
 
 As we only accept the dockerized algorithm submissions on CoNIC challenge and because the Grand-Challenge paltform (challenge host) only works with dockerized containers that have a cetrain structure, you need to follow the guidelines in this document to have a successful submission to the challenge. General guidelines are the same for both "Task 1: Nuclear segmentation and classification" and "Task 2: Prediction of cellular composition" parts of the CoNIC challenge and can be used for both "Preliminary" and "Final" test phases (read more about challenge formate [here](https://conic-challenge.grand-challenge.org/)).
 
@@ -62,17 +62,31 @@ Once you have your algorithm ready according to the challenge template, you can 
 - `requirements.txt`: This file contains a list of all python libraries that are required to run your code. Please make sure that you include every thing you need and this can be checked by testing your docker build locally (explained in the next section).
 - `build.sh`: Helper bash script to generate a docker container based on the provided `Dockerfile` in the directory. Remember, in order to run this script you need to have a working installation of Docker on you system.
 
-Basically, there are three easy steps to create your docker container when you have algorithm ready: First, you need to modify the `Dockerfile` and `requirements.txt` accourding to your needs and then run the `build.sh` bash script in your terminal to create the container. Next step is to test if the created container works as expected.
+Basically, there are three easy steps to create your docker container when you have algorithm ready: First, you need to modify the `Dockerfile` and `requirements.txt` accourding to your needs and then run the `build.sh` bash script in your terminal to create the container:
+```bash
+sudo ./build.sh
+```
 
 ### 4- Testing the docker container
-Once you have verified they are installed correctly.
-You can test your docker by doing:
-
+Once you have created your docker container, you can verify if it's working as expected by running the provided `test.sh` bash script:
 ```bash
 sudo ./test.sh
 ```
+This bash script first tries to build the docker container (if it hasn't been built yet) by calling `build.sh` internally and then running that container by providing the information it needs. Particularly, we require to mount two volumes one the docker: one created and managed by the docker engine (to save the results in) and another one should be already on the host system (which container input images to the docker). If you want to test your container locally, you have to set the path to the directory which will be mounted to `target=/input/` in the container:
+```bash
+docker run \
+        --rm \
+        --gpus all \
+        --memory=32g \
+        --mount src="path_to_the_directory_with_test_image.mha",target=/input/,type=bind \
+        --mount src=conic-output,target=/output/,type=volume \
+        conic-inference
+```
+
+The docker container, similar to Grand-Challenge platform, expects the input to be in form a `.mha` image file. To be able to test your docker containers, we have provided a sample `.mha` file [here]() so you can download and and put in your desired directory to be used for testing. If the testing goes well, dockerized algorithm should save the output in the created `conic-output` volume or any other user-specific results should be shown on the screen. Note that `--memory` argument should be set based on your system specifications.
 
 ### 5- Exporting the docker container
+
 
 ===========================================================================
 
