@@ -90,14 +90,50 @@ Assuming that you have passed all the previous steps successfully, you should be
 ```bash
 sudo ./export.sh
 ```
-Note that you will need the `gzip` library installed if you want to successfully run this script.
+Note that you will need the `gzip` library installed if you want to successfully run this script. This step creates a file with the extension "tar.gz", which you can then upload to grand-challenge to submit your algorithm, which will be exaplined in the next section.
 
 ===========================================================================
 
 ## Submit Your Algorithm
 
-Assuming you have registered for the challenge and read the challenge rules.
+Assuming you have a verfied Granch-Challenge account and have already registered for CoNIC challenge, you need to do two main steps in order to submit your algorithm to the challenge. First, you need to [upload the algorithm](#uplaod-your-algorithm) docker container to the Grand-Challenge platform. Then, you are able to make a [submit that algorithm](#submit-your-algorithm) to compete in any leaderboard or phases of the challenge. But before you proceed, make sure that you have read and understood the [challenge rules](https://conic-challenge.grand-challenge.org/Rules/).
 
 ### 1- Uplaod your algorithm
+> **IMPORTANT:** It crutial to know that you have to submit different algorithms for different tasks of the challenge. Even if you are using the same method for both tasks, you have to upload your algorithm twice beucase the Input and Output configurations for two tasks are different.
 
+In order to submit your algorithm, you first have to add it to the Grand-Challenge platform. To do so, you have to follow the following steps: First, navigate to the [algorithm submission webpage](https://grand-challenge.org/algorithms/) and click on the "+ Add new algorithm" botttom:
+
+<p align="center">
+  <img src="/doc/algorithm.jpg">
+</p> 
+
+Then you will be directed to the "Create Algorithm" page where you have to fill some necessay fileds, as described below (please pay special attention to the files **Inputs** and **Outputs**):
+
+<p align="center">
+  <img src="/doc/algorithm fields.JPG">
+</p>
+
+- Title: title of your algorithm to be shown on the leaderboard and your dashboard.
+- Contact email: the email of the person responsible for this algorithm (This email will be listed as the contact email for the algorithm and will be visible to all users of Grand Challenge.)
+- Display editors: Should the editors of this algorithm be listed on the information page. Preferably selected "Yes".
+- Logo: Uploading an small logo image is mandatory by the grand-challenge platform. Try using an image that represnts your team or algorithm.
+- Viewer: This selects the viewer that might be used for showing algorithm results. Please select: "Viewer CIRRUS Core (Public)".
+- **Inputs**: The input interface to the algorithm. This field determines what kind of input file the algorithm container expects to see in the input. For both tasks 1 and task 2 of the challenge set this to be **Generic Medical Image (Image)**
+- **Outputs**: The output interfaces for the algorithm. This field specifies the type of output(s) that algorithm generates. Please bnote that the output types are different for tasks 1 and 2:
+   1. **Task 1**: the "Outputs" field should be set to **Generic Medical Image (Image)**.
+   2. **Task 2**: you should select 6 types of output interfaces, each representing cell count for a specific cell type. These interfaces are: **Epithelial Cell Count (Anything)**, **Lymphocyte Cell Count (Anything)**, **Plasma Cell Count (Anything)**, **Neutrophil Cell Count (Anything)**, **Eoinophil Cell Count (Anything)**, **Connective tissue Cell Count (Anything)**.
+
+<p align="center">
+<img src="/doc/task1_input_output.JPG">
+</p>
+
+<p align="center">
+<img src="/doc/task2_input_output.JPG">
+</p>
+
+- Credits per job: keep this to 0.
+- Image requires gpu: make sure to enable (check) the use of GPU if your algorithm needs one.
+- Image requires memory gb: Specify how much RAM your algorithm requires to run. The maximum amount allowed is 32.
+
+Once you have completed these required fields, press the "**Save**" botton at the bottom of the page the create your algorithm.
 ### 2- Submit your algorithm
