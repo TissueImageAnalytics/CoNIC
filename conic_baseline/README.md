@@ -2,7 +2,7 @@
   <img src="/doc/conic_banner.png">
 </p>
 
-# Baseline Docker Image
+# Baseline Docker Container
 
 This repository contains the baseline algorithm for CoNIC challenge that is readied to be dockerized and submitted to the CoNIC challenge. In this `README`, you will learn about this repository structure and how `conic_template` is modified. The baseline in question is the `HoVer-Net` that has been provided [here]().
 
@@ -115,7 +115,7 @@ to a more succinct form to save the output. Here is the new version
 
 Notice that we keep the same form of outputs as defined before within `conic_template`. Other than that, we have packaged all required files under the `source` folder.
 
-In order to test the docker image, you can use the following snippet to convert `*.npy` images to `*.mha`
+In order to test the docker container, you can use the following snippet to convert `*.npy` images to `*.mha`
 for testing.
 
 ```python

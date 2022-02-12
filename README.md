@@ -2,21 +2,21 @@
 This repository contains instructions and examples for creating a valid docker for [CoNIC challenge](https://conic-challenge.grand-challenge.org/Home/) and how you can submit it to the [CoNIC challenge](https://conic-challenge.grand-challenge.org/Home/) for evaluation.
 
 ## Table of Contents
-1. [Creating Docker Image](#creating_docker)
-2. [Submitting Docker Image](#submitting_docker)
+1. [Creating Docker Container](#creating_docker)
+2. [Submitting Docker Container](#submitting_docker)
 3. [Video Tutorial](#video_tutorial)
 
 
-## Creating Docker Image <a name="creating_docker"></a>
+## Creating Docker Container <a name="creating_docker"></a>
 
-In this repository, you can find a template for creating valid a docker image for [CoNIC challenge](https://conic-challenge.grand-challenge.org/Home/). We also provide one example algorithm that has been prepared based on the aforementioned template:
+In this repository, you can find a template for creating valid a docker container for [CoNIC challenge](https://conic-challenge.grand-challenge.org/Home/). We also provide one example algorithm that has been prepared based on the aforementioned template:
 
 - `conic_template`: This directory contains a template with all the essential functions and modules needed to create an acceptable docker container for submitting to the CoNIC challenge. Almost all of the functions and instructions in this template should remain the same and you just need to add/link your algorithm and weight files to them.
 - `conic_baseline`: This directory contains a sample algorithm that has been prepared based on the aforementioned instructions within `conic_template`. For this example, the algorithm is the [CoNIC baseline method](https://github.com/vqdang/hover_net/tree/conic).
 
 Each of these directories is accompanied by a `README.md` file in which we have thoroughly explained how you can dockerize your algorithms and submit them to the challenge. The code in the `conic_template` has been extensively commented and users should be able to embed their algorithms in the blank template, however, `conic_template_baseline` can be a good guide (example) to better understand the acceptable algorithm layout. 
 
-## Submitting Docker Image <a name="submitting_docker"></a>
+## Submitting Docker Container <a name="submitting_docker"></a>
 
 
 Assuming you have a verified Grand-Challenge account and have already registered for the CoNIC challenge, you need to do two main steps to submit your algorithm to the challenge. First, you need to [upload the algorithm](#uplaod-your-algorithm) docker container to the Grand-Challenge platform. Then, you can make a [submit that algorithm](#submit-your-algorithm) to compete in any leaderboard or phases of the challenge. But before you proceed, make sure that you have read and understood the [challenge rules](https://conic-challenge.grand-challenge.org/Rules/).
