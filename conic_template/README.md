@@ -150,18 +150,18 @@ For submission guidelines, please refer to this [page](https://github.com/Tissue
 
 # Summary <a name="summary"></a>
 
-Assuming you understand all of the components above, here are the steps we put together as a short summary:
+Assuming you have understood the above, here we provide a short summary of the described steps:
 
-1. Move your model weights and etc. into `data` folder.
+1. Move your model weights (and other files if needed) into `data` folder.
 2. Move your code into `source` folder.
 3. Modify `main.py` to call your packaged code.
 4. Modify `LOCAL_ENTRY` and set `EXECUTE_IN_DOCKER=False` within `process.py` for local debugging.
-5. Use local python debugger to run and test `process.py`. This in turn tests your code that has been added to `main.py`. Repeat previous steps upon failure.
+5. Use local python debugger to run and test `process.py`. This tests your code that has been added to `main.py`. Repeat previous steps upon failure.
 6. Modify `Dockerfile` to dockerize your code if necessary. You will likely skip this step if you have not deviated from our instructions.
 7. Set `EXECUTE_IN_DOCKER=True` within `process.py` and modify `requirements.txt` according to your needs.
 8. Modify `LOCAL_INPUT` and `LOCAL_OUTPUT` within `./test.sh`.
 9. Run `test.sh` for testing the docker image locally. Repeat previous steps upon failure.
 10. Run `export.sh` for generating docker image for submission.
-11. Make your Algorithm on Grand Challenge website. Please refer to this [page](https://github.com/TissueImageAnalytics/CoNIC/tree/docker-template) for setting the interface.
+11. Make your Algorithm on Grand Challenge website. Please refer to this [page](https://github.com/TissueImageAnalytics/CoNIC/tree/docker-template) for setting up the interface.
 12. Upload docker image from step #10 to your Grand Challenge Algorithm.
 13. Submit your algorithm to CoNIC Challenge.
