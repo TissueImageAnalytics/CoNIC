@@ -32,7 +32,7 @@ def process_segmentation(np_map, hv_map, tp_map, model):
 def process_composition(pred_map, num_types):
   ...
 ```
-to `source\main.py` but we do not modify the I/O of the `run` functions. Strictly speaking, we have modified
+to `source/main.py` but we do not modify the I/O of the `run` functions. Strictly speaking, we have modified
 
 ```python
     # ! DO NOT MODIFY IF YOU ARE UNCLEAR ABOUT API !
