@@ -36,9 +36,9 @@ git clone -b docker-template https://github.com/TissueImageAnalytics/CoNIC
 
 The Grand Challenge platform will use the following entry within your docker to provide input and retrieve output:
 - `/opt/algorithm/`: Folder within the docker image that contains participant algorithm and all associated external data.
-- `/input/*`: Folder within the docker image that contains input data *from the organizers*. For this challenge, each task will received one single `*.mha` file.
-- `/output/*`: Folder within the docker image that contains output data *from the participants*. For this challenge, it is further defined that.
-  - **Task 1**: A single `*.mha` to contain the segmentation results. This is `*.mha` is an `int32` array that is of shape `Nx256x256x2`. The channel `0` contains nuclei instance `id` while the channel `1` contains the type of the instance at the same location. Please refer to the training ground truth provided in the challenge as an example.
+- `/input/*`: Folder within the docker image that contains input data **from the organizers**. For this challenge, each task will received one single `*.mha` file.
+- `/output/*`: Folder within the docker image that contains output data **from the participants**. For this challenge, it is further defined that.
+  - **Task 1**: A single `*.mha` to contain the segmentation results. This `*.mha` is an `int32` array that is of shape `Nx256x256x2`. The channel `0` contains nuclei instance `id` while the channel `1` contains the type of the instance at the same location. Please refer to the training ground truth provided in the challenge as an example.
   - **Task 2**: The results for counting `neutrophil`,
   `epithelial`, `lymphocyte`, `plasma`, `eosinophil` and
   `connective` nuclei must be respectively saved at the following locations:
@@ -81,7 +81,7 @@ Now, in line with the above API, we pre-define and hard-code the input and outpu
 - `process.py`: This is the main file that we hard code the `Dockerfile` to run on the Grand Challenge Platform to make it easy for you. For **debugging** your python code **locally outside docker**, you need to set `EXECUTE_IN_DOCKER = False` and change the `LOCAL_ENTRY` dictionary values (for `"input_dir"`, `"output_dir"`, and `user_data_dir` keys) according to your system.
 
 
-- `source/main.py`: This file contains a `run` function that is called by the `process.py`. The I/O of this `run` function has been pre-defined based on our (the organizers) aggreement with the Grand-Challenge system so that they can provide and pick up your predictions for evaluation. This `run` function is where your entire algorithm will be executed. We expect you to fill in the code to do so within
+- `source/main.py`: This file contains a `run` function that is called by the `process.py`. The I/O of this `run` function has been pre-defined based on our (the organizers) aggreement with the Grand-Challenge system so that they can provide input to your docker and pick up your docker predictions for evaluation. This `run` function is where your entire algorithm will be executed. We expect you to fill in the code to do so within
 
 ```
 # ===== Whatever you need (function calls or complete algorithm) goes here
@@ -146,11 +146,11 @@ sudo ./export.sh
 ```
 Note that you will need the `gzip` library installed if you want to successfully run this script. This step creates a file with the extension "tar.gz", which you can then upload to Grand Challenge to submit your algorithm.
 
-For submission guidelines, please refer to this [page]().
+For submission guidelines, please refer to this [page](https://github.com/TissueImageAnalytics/CoNIC/tree/docker-template).
 
 # Summary <a name="summary"></a>
 
-Assuming you understand all of the components above, here is a short instructions we put together as a summary:
+Assuming you understand all of the components above, here are the steps we put together as a short summary:
 
 1. Move your model weights and etc. into `data` folder.
 2. Move your code into `source` folder.
@@ -158,7 +158,7 @@ Assuming you understand all of the components above, here is a short instruction
 4. Modify `LOCAL_ENTRY` and set `EXECUTE_IN_DOCKER=False` within `process.py` for local debugging.
 5. Use local python debugger to run and test `process.py`. This in turn tests your code that has been added to `main.py`. Repeat previous steps upon failure.
 6. Modify `Dockerfile` to dockerize your code if necessary. You will likely skip this step if you have not deviated from our instructions.
-7. Set `EXECUTE_IN_DOCKER=True` within `process.py`.
+7. Set `EXECUTE_IN_DOCKER=True` within `process.py` and modify `requirements.txt` according to your needs.
 8. Modify `LOCAL_INPUT` and `LOCAL_OUTPUT` within `./test.sh`.
 9. Run `test.sh` for testing the docker image locally. Repeat previous steps upon failure.
 10. Run `export.sh` for generating docker image for submission.
