@@ -114,8 +114,21 @@ We have defined the entry point as following within the `Dockerfile` to run the 
 ENTRYPOINT python -m process $0 $@
 ```
 
-To run `test.sh` sucessfully, you will need to modify the `LOCAL_INPUT` and `LOCAL_OUTPUT` variables to point them to the directories that respectively contain the input `*.mha` and the inference results.
+To run `test.sh` sucessfully, you will need to modify the `LOCAL_INPUT` and `LOCAL_OUTPUT` variables to point them to the directories that respectively contain the input `*.mha` and the inference results. You can use the following snippet to convert `*.npy` images to `*.mha`
+for testing.
 
+```python
+import itk
+import numpy as np
+
+arr = np.load(f"{DATA_ROOT_DIR}/images.npy")
+dump_itk = itk.image_from_array(arr)
+itk.imwrite(dump_itk, f"{OUT_DIR}/images.mha")
+dump_np = itk.imread(f"{OUT_DIR}/images.mha")
+dump_np = np.array(dump_np)
+# content check
+assert np.sum(np.abs(dump_np - arr)) == 0
+```
 
 ## 4. Exporting the docker container
 Assuming that you have successfully passed all of the previous steps, you need to export your docker image to a file that is fitted for submission. This is done by calling `export.sh` bash script:
