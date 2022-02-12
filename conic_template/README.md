@@ -25,7 +25,7 @@ After installing the docker, you can start by either copying this [folder]() and
 git clone -b docker-template https://github.com/TissueImageAnalytics/CoNIC
 ```
 
-## 2.Docker Image and Grand Challenge API
+## 2. Docker Image and Grand Challenge API
 
 The Grand Challenge platform will use the following entry within your docker to provide input and retrieve output:
 - `/opt/algorithm/`: Folder within the docker image that contains participant algorithm and all associated external data.
