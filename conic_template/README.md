@@ -8,7 +8,7 @@ This repository contains instructions for creating a valid docker for [CoNIC cha
 
 For the preface, submitting a docker image is a great advantage because participants have full control over their algorithm setup and privacy. It is also tremendously beneficial for the organizers because we do not need to spend time setting up each different configuration. However, it should be noted that for this form of submission to work, we demand a strict definition of the I/O between the Grand Challenge platform and the docker image. 
 
-> **Important**: Any violation on the protocols mentioned below will automatically void your submission results.
+> **Important**: Any violation of the protocols mentioned below will automatically void your submission results.
 
 
 # Dockerize Your Algorithm
