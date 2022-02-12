@@ -34,13 +34,15 @@ The Grand Challenge platform will use the following entry within your docker to 
   - **Task 1**: A single `*.mha` to contain the segmentation results. This is `*.mha` is an `int32` array that is of shape `Nx256x256x2`. The channel `0` contains nuclei instance `id` while the channel `1` contains the type of the instance at the same location. Please refer to the training ground truth provided in the challenge as an example.
   - **Task 2**: The results for counting `neutrophil`,
   `epithelial`, `lymphocyte`, `plasma`, `eosinophil` and
-  `connective` must be respectively saved at followings. Each file contain a list of integer of length `N`.
+  `connective` nuclei must be respectively saved at the following locations:
     - `/output/neutrophil-count.json`
     - `/output/epithelial-cell-count.json`
     - `/output/lymphocyte-count.json`
     - `/output/plasma-cell-count.json`
     - `/output/eosinophil-count.json`
     - `/output/connective-tissue-cell-count.json`
+
+Each file contains a list of integers of length `N`.
 
 Before continuing, we outline the conventions we use within the files that give instructions for the user
 
