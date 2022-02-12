@@ -10,12 +10,19 @@ For the preface, submitting a docker image is a great advantage because particip
 
 > **Important**: Any violation of the protocols mentioned below will automatically void your submission results.
 
+# Table of Contents
+- [Dockerize Your Algorithm](#dockerize)
+  1. [Prerequisite](#requirements)
+  2. [Docker Image and Grand Challenge API](#docker_io)
+  3. [Creating and Testing the docker container](#test_docker)
+  4. [Exporting the docker container](#export_docker)
+- [Summary](#summary)
 
-# Dockerize Your Algorithm
+# Dockerize Your Algorithm <a name="dockerize"></a>
 
 The following steps should be done to create a valid docker image for the challenge.
 
-## 1. Prerequisite
+## 1. Prerequisite <a name="requirements"></a>
 To create and test your docker setup, you will need to install [Docker Engine](https://docs.docker.com/engine/install/)
 and [NVIDIA-container-toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) (in case you need GPU computation).
 
@@ -25,7 +32,7 @@ After installing the docker, you can start by either copying this [folder]() and
 git clone -b docker-template https://github.com/TissueImageAnalytics/CoNIC
 ```
 
-## 2. Docker Image and Grand Challenge API
+## 2. Docker Image and Grand Challenge API <a name="docker_io"></a>
 
 The Grand Challenge platform will use the following entry within your docker to provide input and retrieve output:
 - `/opt/algorithm/`: Folder within the docker image that contains participant algorithm and all associated external data.
@@ -95,7 +102,7 @@ target, etc. We have designed the `Dockerfile` template so the contents in `data
 
 - `build.sh`: Helper bash script to generate a docker container based on the provided `Dockerfile` in the directory. Remember, in order to run this script you need to have a working installation of Docker on your system.
 
-## 3. Creating and Testing the docker container
+## 3. Creating and Testing the docker container <a name="test_docker"></a>
 
 Once you successfully test `source/main.py` locally for your algorithm, modify the `Dockerfile` and `requirements.txt` according to your needs and then run the `build.sh` bash script in your terminal to create the container:
 
@@ -132,7 +139,7 @@ dump_np = np.array(dump_np)
 assert np.sum(np.abs(dump_np - arr)) == 0
 ```
 
-## 4. Exporting the docker container
+## 4. Exporting the docker container <a name="export_docker"></a>
 Assuming that you have successfully passed all of the previous steps, you need to export your docker image to a file that is fitted for submission. This is done by calling `export.sh` bash script:
 ```bash
 sudo ./export.sh
@@ -140,3 +147,21 @@ sudo ./export.sh
 Note that you will need the `gzip` library installed if you want to successfully run this script. This step creates a file with the extension "tar.gz", which you can then upload to Grand Challenge to submit your algorithm.
 
 For submission guidelines, please refer to this [page]().
+
+# Summary <a name="summary"></a>
+
+Assuming you understand all of the components above, here is a short instructions we put together as a summary:
+
+1. Move your model weights and etc. into `data` folder.
+2. Move your code into `source` folder.
+3. Modify `main.py` to call your packaged code.
+4. Modify `LOCAL_ENTRY` and set `EXECUTE_IN_DOCKER=False` within `process.py` for local debugging.
+5. Use local python debugger to run and test `process.py`. This in turn tests your code that has been added to `main.py`. Repeat previous steps upon failure.
+6. Modify `Dockerfile` to dockerize your code if necessary. You will likely skip this step if you have not deviated from our instructions.
+7. Set `EXECUTE_IN_DOCKER=True` within `process.py`.
+8. Modify `LOCAL_INPUT` and `LOCAL_OUTPUT` within `./test.sh`.
+9. Run `test.sh` for testing the docker image locally. Repeat previous steps upon failure.
+10. Run `export.sh` for generating docker image for submission.
+11. Make your Algorithm on Grand Challenge website. Please refer to this [page](https://github.com/TissueImageAnalytics/CoNIC/tree/docker-template) for setting the interface.
+12. Upload docker image from step #10 to your Grand Challenge Algorithm.
+13. Submit your algorithm to CoNIC Challenge.
