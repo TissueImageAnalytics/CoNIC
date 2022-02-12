@@ -115,7 +115,7 @@ Additionally, you can use the following script to create and test run your docke
 sudo ./test.sh
 ```
 
-This bash script `test.sh` first tries to build the docker container (if it hasn't been built yet) by first calling `build.sh` internally and then running the docker image based on its defined entry point.
+This bash script `test.sh` first tries to build the docker container by first calling `build.sh` internally and then running the docker image based on its defined entry point.
 
 We have defined the entry point as following within the `Dockerfile` to run the aforementioned `process.py`
 
