@@ -42,7 +42,10 @@ COPY --chown=algorithm:algorithm source/ /opt/algorithm/source/
 
 # Install required python packages via pip - you may adapt the requirements.txt to your needs
 RUN python -m pip install --user -r requirements.txt
+# >>>>>>>>>>>>>>>>>>>>>>>>>
 
+# ! DO NOT MODIFY - ORGANIZER SPECIFIC
+# <<<<<<<<<<<<<<<<<<<<<<<<<
 # Entrypoint to your python code - executes process.py as a script
 ENTRYPOINT python -m process $0 $@
 # >>>>>>>>>>>>>>>>>>>>>>>>>

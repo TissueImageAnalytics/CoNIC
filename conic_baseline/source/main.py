@@ -126,6 +126,7 @@ def run(
     PRETRAINED = f'{user_data_dir}/hovernet-conic.pth'
     # The path to contain output and intermediate processing results
     OUT_DIR = f'{output_dir}/'
+    DOCKER_OUT_DIR = "predictions/"
     print(PRETRAINED)
 
     start_time = time.time()
@@ -150,7 +151,7 @@ def run(
     predictor.predict(
         dataset,
         on_gpu=True,
-        save_dir=f'{OUT_DIR}/raw/'
+        save_dir=f'{DOCKER_OUT_DIR}/raw/'
     )
     end_time = time.time()
     print("Infer time: ", end_time - start_time)
@@ -164,9 +165,9 @@ def run(
     for idx in range(num_images):
         img = np.array(images[idx])
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        np_map = np.load(f"{OUT_DIR}/raw/{idx}.0.npy")
-        hv_map = np.load(f"{OUT_DIR}/raw/{idx}.1.npy")
-        tp_map = np.load(f"{OUT_DIR}/raw/{idx}.2.npy")
+        np_map = np.load(f"{DOCKER_OUT_DIR}/raw/{idx}.0.npy")
+        hv_map = np.load(f"{DOCKER_OUT_DIR}/raw/{idx}.1.npy")
+        tp_map = np.load(f"{DOCKER_OUT_DIR}/raw/{idx}.2.npy")
 
         pred_map = process_segmentation(
             np_map, hv_map, tp_map, model)
@@ -178,25 +179,43 @@ def run(
     semantic_predictions = np.array(semantic_predictions)
     composition_predictions = np.array(composition_predictions)
 
+    # ! >>>>>>>>>>>> Saving to approriate format for evaluation docker
+
     # Saving the results for segmentation in .mha
     itk.imwrite(
         itk.image_from_array(semantic_predictions),
         f"{OUT_DIR}/pred_seg.mha"
     )
 
-    # version v0.0.3
+    # version v0.0.8
     # Saving the results for composition prediction
     TYPE_NAMES = [
-        "neutrophil", "epithelial", "lymphocyte",
-        "plasma", "eosinophil", "connective"
+        "neutrophil",
+        "epithelial-cell",
+        "lymphocyte",
+        "plasma-cell",
+        "eosinophil",
+        "connective-tissue-cell"
     ]
     for type_idx, type_name in enumerate(TYPE_NAMES):
         cell_counts = composition_predictions[:, (type_idx+1)]
         cell_counts = cell_counts.astype(np.int32).tolist()
         save_as_json(
             cell_counts,
-            f'{OUT_DIR}/{type_name}.json'
+            f'{OUT_DIR}/{type_name}-count.json'
         )
+
+    TYPE_NAMES = [
+        "neutrophil", "epithelial", "lymphocyte",
+        "plasma", "eosinophil", "connective"
+    ]
+    df = pd.DataFrame(
+        composition_predictions[:, 1:].astype(np.int32),
+    )
+    df.columns = TYPE_NAMES
+    df.to_csv(f'{OUT_DIR}/pred_count.csv', index=False)
 
     end_time = time.time()
     print("Run time: ", end_time - start_time)
+
+    # ! <<<<<<<<<<<<
