@@ -42,7 +42,7 @@ The Grand Challenge platform will use the following entry within your docker to 
     - `/output/eosinophil-count.json`
     - `/output/connective-tissue-cell-count.json`
 
-Before continuing, we outline the conventions we use within the files to provide directives or instructions
+Before continuing, we outline the conventions we use within the files that give instructions for the user
 
 ```
 # Instruction / Directive
@@ -50,22 +50,22 @@ Before continuing, we outline the conventions we use within the files to provide
 # some codes within this
 # >>>>>>>>>>>>>>>>>>>>>>>>>
 ```
-The above snippet means that any codes within the `<<<` and `>>>` follows the directive above it. For example
+The above snippet means that any code within the `<<<` and `>>>` follows the instruction above it. For example
 
 ```
 # ! USER SPECIFIC
 # <<<<<<<<<<<<<<<<<<<<<<<<<
 # >>>>>>>>>>>>>>>>>>>>>>>>>
 ```
-means users should modify the content in between as they see approriate. However,
+means that users should modify the content in between as they see approriate. However,
 ```
 # ! DO NOT MODIFY
 # <<<<<<<<<<<<<<<<<<<<<<<<<
 # >>>>>>>>>>>>>>>>>>>>>>>>>
 ```
-means the content in between must not be modified or overwritten at all costs!
+means that the content in between must **not** be modified or overwritten at all costs!
 
-Now, in line with the above API, we pre-define and hard-code the input and output conversion entry into the following files. Participants should avoid editing these files/parts if you are unclear about the API and how docker works.
+Now, in line with the above API, we pre-define and hard-code the input and output conversion components of the code. Participants should avoid editing this if they are unclear about the API and how docker works.
 
 - `Dockerfile`: Contains the instruction for [Docker Engine](https://docs.docker.com/engine/install/) so that they can build your docker image.
 
