@@ -3,13 +3,15 @@ from source.main import run
 
 # Define the entry point for hooking data
 
-# TODO: ask if the mounting entry point in docker is fixed from grand challenge team
-
 # ! DO NOT MODIFY - ORGANIZER SPECIFIC
 # <<<<<<<<<<<<<<<<<<<<<<<<<
 DOCKER_ENTRY = {
+    # path to folder that contain .mha for inference
     "input_dir": "/input/",
+    # path to folder that contain inference results
     "output_dir": "/output/",
+    # path to folder that contain user data such as
+    # neural network weights and stain matrices
     "user_data_dir": "/opt/algorithm/data/"
 }
 # >>>>>>>>>>>>>>>>>>>>>>>>>
@@ -17,18 +19,24 @@ DOCKER_ENTRY = {
 # ! USER SPECIFIC
 # <<<<<<<<<<<<<<<<<<<<<<<<<
 LOCAL_ENTRY = {
-    "input_dir": "/mnt/storage_0/workspace/nuclei/conic-challenge/exp_output/local/data/valid/",
-    "output_dir": "/mnt/storage_0/workspace/nuclei/conic-challenge/exp_output/dump/",
-    "user_data_dir": "/mnt/storage_0/workspace/nuclei/conic-challenge/docker/inference/data/"
+    # path to folder that contain .mha for inference
+    "input_dir": "",
+    # path to folder that contain inference results
+    "output_dir": "",
+    # path to folder that contain user data such as
+    # neural network weights and stain matrices
+    "user_data_dir": ""
 }
 # >>>>>>>>>>>>>>>>>>>>>>>>>
 
 # We have this parameter to adapt the paths between local execution
-# and execution in docker. You can use this flag to switch between these two modes.
+# and execution in docker. You can use this flag to switch between
+# these two modes for debugging the docker image or your python code.
 
 EXECUTE_IN_DOCKER = False
 
-
+# ! DO NOT MODIFY - ORGANIZER SPECIFIC
+# <<<<<<<<<<<<<<<<<<<<<<<<<
 if __name__ == "__main__":
     print(f"\nWorking Directory: {os.getcwd()}")
     print("\n>>>>>>>>>>>>>>>>> Start User Script\n")
@@ -36,3 +44,4 @@ if __name__ == "__main__":
     ENTRY = DOCKER_ENTRY if EXECUTE_IN_DOCKER else LOCAL_ENTRY
     run(**ENTRY)
     print("\n>>>>>>>>>>>>>>>>> End User Script\n")
+# >>>>>>>>>>>>>>>>>>>>>>>>>
