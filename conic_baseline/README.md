@@ -6,7 +6,7 @@
 
 This repository contains the baseline algorithm for CoNIC challenge that is readied to be dockerized and submitted to the CoNIC challenge. In this `README`, you will learn about this repository structure and how `conic_template` is modified. The baseline in question is the `HoVer-Net` that has been provided [here]().
 
-Before you start, you need to download the `HoVer-net` [preatrained weight](https://drive.google.com/file/d/1oVCD4_kOS-8Wu-eS5ZqzE30F9V3Id78d/view?usp=sharing) and put it under `data` folder.
+Before you start, you need to download the `HoVer-net` [pretrained weight](https://drive.google.com/file/d/1oVCD4_kOS-8Wu-eS5ZqzE30F9V3Id78d/view?usp=sharing) and put it under `data` folder.
 
 Compared to the baseline `conic_template`, this repository keeps the following files intact:
 - `process.py`
