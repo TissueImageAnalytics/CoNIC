@@ -6,7 +6,9 @@
 
 This repository contains instructions for creating a valid docker for [CoNIC challenge](https://conic-challenge.grand-challenge.org/Home/) submissions.
 
-For the preface, submitting docker image has a great advantage that the participants have full control over their algorithm setups and privacy. It is also tremendously beneficial for the organizer side as well because we do not need to trouble yourself over each and every different configurations. However, for this form of submission to work, it demands strict and clear definition of the I/O between the Grand Challenge platform and the docker image. **Any violation on the protocols mentioned below will automatically void your submission**.
+For the preface, submitting docker image has a great advantage that the participants have full control over their algorithm setups and privacy. It is also tremendously beneficial for the organizer side as well because we do not need to trouble yourself over each and every different configurations. However, for this form of submission to work, it demands strict and clear definition of the I/O between the Grand Challenge platform and the docker image. 
+
+> **Important**: Any violation on the protocols mentioned below will automatically void your submission results.
 
 
 # Dockerize Your Algorithm
@@ -40,7 +42,7 @@ The grand challenge will use the following entry within your docker to provide i
     - `/output/eosinophil-count.json`
     - `/output/connective-tissue-cell-count.json`
 
-Before we carry on with the explanation, we outline the convention we use within the files to provide directives or instruction
+Before we carry on with more explanations, we outline the conventions we use within the files to provide directives or instructions
 
 ```
 # Instruction / Directive

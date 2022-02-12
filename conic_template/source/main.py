@@ -1,9 +1,6 @@
 
-import os
-
 import itk
 import numpy as np
-import torch
 
 from .utils import print_dir, recur_find_ext, save_as_json
 
@@ -34,14 +31,10 @@ def run(
     print(f"INPUT_DIR: {input_dir}")
     # recursively print out all subdirs and their contents
     print_dir(input_dir)
-    print("USER_DATA_DIR: ", os.listdir(user_data_dir))
+    print("USER_DATA_DIR: ")
     # recursively print out all subdirs and their contents
     print_dir(user_data_dir)
     print(f"OUTPUT_DIR: {output_dir}")
-
-    print(f"CUDA: {torch.cuda.is_available()}")
-    for device in range(torch.cuda.device_count()):
-        print(f"---Device {device}: {torch.cuda.get_device_name(0)}")
 
     paths = recur_find_ext(f"{input_dir}", [".mha"])
     assert len(paths) == 1, "There should only be one image package."
@@ -57,19 +50,21 @@ def run(
     # ...
     # >>>>>>>>>>>>>>>>>>>>>>>>>
 
-    # ===== Whatever you need (function calls or complete algorithm) goes here
+    # ===== Modify this accordingly
     # <<<<<<<<<<<<<<<<<<<<<<<<<
     # ! Example of valid predictions
     num_images = 16
     np.random.seed(5)
-    pred_segmentation = np.random.randint(0, 255, (num_images, 256, 256, 2))
+    pred_segmentation = np.random.randint(
+        0, 255, (num_images, 256, 256, 2), dtype=np.int32
+    )
     pred_regression = {
-        "neutrophil"            : np.random.randint(0, 255, num_images),
-        "epithelial-cell"       : np.random.randint(0, 255, num_images),
-        "lymphocyte"            : np.random.randint(0, 255, num_images),
-        "plasma-cell"           : np.random.randint(0, 255, num_images),
-        "eosinophil"            : np.random.randint(0, 255, num_images),
-        "connective-tissue-cell": np.random.randint(0, 255, num_images),
+        "neutrophil"            : np.random.randint(0, 255, num_images).tolist(),
+        "epithelial-cell"       : np.random.randint(0, 255, num_images).tolist(),
+        "lymphocyte"            : np.random.randint(0, 255, num_images).tolist(),
+        "plasma-cell"           : np.random.randint(0, 255, num_images).tolist(),
+        "eosinophil"            : np.random.randint(0, 255, num_images).tolist(),
+        "connective-tissue-cell": np.random.randint(0, 255, num_images).tolist(),
     }
     # >>>>>>>>>>>>>>>>>>>>>>>>>
 

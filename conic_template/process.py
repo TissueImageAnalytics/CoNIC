@@ -33,7 +33,7 @@ LOCAL_ENTRY = {
 # and execution in docker. You can use this flag to switch between
 # these two modes for debugging the docker image or your python code.
 
-EXECUTE_IN_DOCKER = False
+EXECUTE_IN_DOCKER = True
 
 # ! DO NOT MODIFY - ORGANIZER SPECIFIC
 # <<<<<<<<<<<<<<<<<<<<<<<<<
