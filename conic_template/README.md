@@ -19,7 +19,7 @@ The following steps should be done to create a valid docker image for the challe
 To create and test your docker setup, you will need to install [Docker Engine](https://docs.docker.com/engine/install/)
 and [NVIDIA-container-toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) (in case you need GPU computation).
 
-After installing the docker, you can start by either copying this [folder]() and its contens; or cloning this repository and navigate to `conic_template` folder:
+After installing the docker, you can start by either copying this [folder]() and its contents; or cloning this repository and navigate to `conic_template` folder:
 
 ```
 git clone -b docker-template https://github.com/TissueImageAnalytics/CoNIC
@@ -27,7 +27,7 @@ git clone -b docker-template https://github.com/TissueImageAnalytics/CoNIC
 
 ## 2.Docker Image and Grand Challenge API
 
-The grand challenge will use the following entry within your docker to provide input and retrieve output:
+The Grand Challenge platform will use the following entry within your docker to provide input and retrieve output:
 - `/opt/algorithm/`: Folder within the docker image that contains participant algorithm and all associated external data.
 - `/input/*`: Folder within the docker image that contains input data *from the organizers*. For this challenge, each task will received one single `*.mha` file.
 - `/output/*`: Folder within the docker image that contains output data *from the participants*. For this challenge, it is further defined that.
@@ -42,7 +42,7 @@ The grand challenge will use the following entry within your docker to provide i
     - `/output/eosinophil-count.json`
     - `/output/connective-tissue-cell-count.json`
 
-Before we carry on with more explanations, we outline the conventions we use within the files to provide directives or instructions
+Before continuing, we outline the conventions we use within the files to provide directives or instructions
 
 ```
 # Instruction / Directive
@@ -57,17 +57,17 @@ The above snippet means that any codes within the `<<<` and `>>>` follows the di
 # <<<<<<<<<<<<<<<<<<<<<<<<<
 # >>>>>>>>>>>>>>>>>>>>>>>>>
 ```
-mean users should modify the conten in between as they see approriate. However,
+means users should modify the content in between as they see approriate. However,
 ```
 # ! DO NOT MODIFY
 # <<<<<<<<<<<<<<<<<<<<<<<<<
 # >>>>>>>>>>>>>>>>>>>>>>>>>
 ```
-mean the content in between must not be modified or overwritten at all cost.
+means the content in between must not be modified or overwritten at all costs!
 
-Now, in line with the above API, we pre-define and hard-coded the input and output conversion entry into the following files. Participants should avoid editing these files/parts if you are unclear about the API and how docker works.
+Now, in line with the above API, we pre-define and hard-code the input and output conversion entry into the following files. Participants should avoid editing these files/parts if you are unclear about the API and how docker works.
 
-- `Dockerfile`: Contain the instruction for [Docker Engine](https://docs.docker.com/engine/install/) so that they can build your docker image.
+- `Dockerfile`: Contains the instruction for [Docker Engine](https://docs.docker.com/engine/install/) so that they can build your docker image.
 
 - `process.py`: This is the main file that we hard code the `Dockerfile` to run on the Grand Challenge Platform to make it easy for you. For **debugging** your python code **locally outside docker**, you need to set `EXECUTE_IN_DOCKER = False` and change the `LOCAL_ENTRY` dictionary values (for `"input_dir"`, `"output_dir"`, and `user_data_dir` keys) according to your system.
 
@@ -82,10 +82,10 @@ Now, in line with the above API, we pre-define and hard-coded the input and outp
 ```
 - `source/utils.py`: This file contains miscellaneous functions that are required by the portion we defined within `source/main.py` and `process.py`. Feel free to use any function within this for your purpose but please do not modify or remove it.
 
-- `data` directory: Every external data that users require to run their algorithms should be put in this directory. These data include model trained weights, stain normalization
-target, etc. . We have designed the `Dockerfile` template so the contents in this `data` are automatically copied over to your docker image under `/opt/algorithm/data/`.
+- `data` directory: All external data that users require to run their algorithms should be put in this directory. This data includes model trained weights, stain normalization
+target, etc. We have designed the `Dockerfile` template so the contents in `data` are automatically copied over to your docker image under `/opt/algorithm/data/`.
 
-> **Important**: Please note that your docker container will not have interent access when it's being run on the Grand-Challenge platform. Therefore, all data and packages required for the algorithm should be included in the docker container upon its creation.
+> **Important**: Please note that your docker container will not have interent access when it's being run on the Grand Challenge platform. Therefore, all data and packages required for the algorithm should be included in the docker container upon its creation.
 
 - `requirements.txt`: This file contains a list of all python libraries that are required to run your code. Please make sure that you include everything you need and this can be checked by testing your docker build locally (explained in the next section).
 
@@ -95,13 +95,13 @@ target, etc. . We have designed the `Dockerfile` template so the contents in thi
 
 ## 3. Creating and Testing the docker container
 
-Once you test the `source/main.py` successfully locally for your algorithm, modify the `Dockerfile` and `requirements.txt` according to your needs and then run the `build.sh` bash script in your terminal to create the container:
+Once you successfully test `source/main.py` locally for your algorithm, modify the `Dockerfile` and `requirements.txt` according to your needs and then run the `build.sh` bash script in your terminal to create the container:
 
 ```bash
 sudo ./build.sh
 ```
 
-Additionally, you can also use the following script to create then test run your docker image on your local machine.
+Additionally, you can use the following script to create and test run your docker image on your local machine.
 ```bash
 sudo ./test.sh
 ```
@@ -135,6 +135,6 @@ Assuming that you have successfully passed all of the previous steps, you need t
 ```bash
 sudo ./export.sh
 ```
-Note that you will need the `gzip` library installed if you want to successfully run this script. This step creates a file with the extension "tar.gz", which you can then upload to grand-challenge to submit your algorithm.
+Note that you will need the `gzip` library installed if you want to successfully run this script. This step creates a file with the extension "tar.gz", which you can then upload to Grand Challenge to submit your algorithm.
 
 For submission guidelines, please refer to this [page]().
