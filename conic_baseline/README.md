@@ -14,7 +14,7 @@ Compared to the baseline `conic_template`, this repository keeps the following f
 - `export.sh`
 - `Dockerfile`
 
-We have modified `source\main.py` and fill in the 
+We have modified `source/main.py` and fill in the 
 
 ```
 # ===== Whatever you need (function calls or complete algorithm) goes here
@@ -73,7 +73,7 @@ to `source\main.py` but we do not modify the I/O of the `run` functions. Strictl
     # >>>>>>>>>>>>>>>>>>>>>>>>>
 ```
 
-to a more succint form to save the output. Here is the new version
+to a more succinct form to save the output. Here is the new version
 
 ```python
     # Saving the results for segmentation in .mha
@@ -113,7 +113,7 @@ to a more succint form to save the output. Here is the new version
     end_time = time.time()
 ```
 
-Notice that we still keep the same form of outputs as defined beforehand within `conic_template`. Other than that, we have packaged all required files under `source` folder.
+Notice that we keep the same form of outputs as defined before within `conic_template`. Other than that, we have packaged all required files under the `source` folder.
 
 In order to test the docker image, you can use the following snippet to convert `*.npy` images to `*.mha`
 for testing.
