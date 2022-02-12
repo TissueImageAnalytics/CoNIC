@@ -10,12 +10,19 @@ For the preface, submitting a docker image is a great advantage because particip
 
 > **Important**: Any violation of the protocols mentioned below will automatically void your submission results.
 
+# Table of Contents
+- [Dockerize Your Algorithm](#dockerize)
+  1. [Prerequisite](#requirements)
+  2. [Docker Image and Grand Challenge API](#docker_io)
+  3. [Creating and Testing the docker container](#test_docker)
+  4. [Exporting the docker container](#export_docker)
+- [Summary](#summary)
 
-# Dockerize Your Algorithm
+# Dockerize Your Algorithm <a name="dockerize"></a>
 
 The following steps should be done to create a valid docker image for the challenge.
 
-## 1. Prerequisite
+## 1. Prerequisite <a name="requirements"></a>
 To create and test your docker setup, you will need to install [Docker Engine](https://docs.docker.com/engine/install/)
 and [NVIDIA-container-toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) (in case you need GPU computation).
 
@@ -25,13 +32,13 @@ After installing the docker, you can start by either copying this [folder]() and
 git clone -b docker-template https://github.com/TissueImageAnalytics/CoNIC
 ```
 
-## 2. Docker Image and Grand Challenge API
+## 2. Docker Image and Grand Challenge API <a name="docker_io"></a>
 
 The Grand Challenge platform will use the following entry within your docker to provide input and retrieve output:
 - `/opt/algorithm/`: Folder within the docker image that contains participant algorithm and all associated external data.
-- `/input/*`: Folder within the docker image that contains input data *from the organizers*. For this challenge, each task will received one single `*.mha` file.
-- `/output/*`: Folder within the docker image that contains output data *from the participants*. For this challenge, it is further defined that.
-  - **Task 1**: A single `*.mha` to contain the segmentation results. This is `*.mha` is an `int32` array that is of shape `Nx256x256x2`. The channel `0` contains nuclei instance `id` while the channel `1` contains the type of the instance at the same location. Please refer to the training ground truth provided in the challenge as an example.
+- `/input/*`: Folder within the docker image that contains input data **from the organizers**. For this challenge, each task will received one single `*.mha` file.
+- `/output/*`: Folder within the docker image that contains output data **from the participants**. For this challenge, it is further defined that.
+  - **Task 1**: A single `*.mha` to contain the segmentation results. This `*.mha` is an `int32` array that is of shape `Nx256x256x2`. The channel `0` contains nuclei instance `id` while the channel `1` contains the type of the instance at the same location. Please refer to the training ground truth provided in the challenge as an example.
   - **Task 2**: The results for counting `neutrophil`,
   `epithelial`, `lymphocyte`, `plasma`, `eosinophil` and
   `connective` nuclei must be respectively saved at the following locations:
@@ -71,10 +78,10 @@ Now, in line with the above API, we pre-define and hard-code the input and outpu
 
 - `Dockerfile`: Contains the instruction for [Docker Engine](https://docs.docker.com/engine/install/) so that they can build your docker image.
 
-- `process.py`: This is the main file that we hard code the `Dockerfile` to run on the Grand Challenge Platform to make it easy for you. For **debugging** your python code **locally outside docker**, you need to set `EXECUTE_IN_DOCKER = False` and change the `LOCAL_ENTRY` dictionary values (for `"input_dir"`, `"output_dir"`, and `user_data_dir` keys) according to your system.
+- `process.py`: This is the file that we hard code within `Dockerfile` as entry point. When Grand Challenge platform run your docker, this file will be executed and it will call the `run` from `main.py` with the appropriate entry point. We have designed this file and `​source/main.py` based on our agreement with the Grand Challenge about the docker I/O. For **debugging** your python code **locally outside docker**, you need to set `EXECUTE_IN_DOCKER = False` and change the `LOCAL_ENTRY` dictionary values (for `"input_dir"`, `"output_dir"`, and `user_data_dir` keys) according to your system.
 
 
-- `source/main.py`: This file contains a `run` function that is called by the `process.py`. The I/O of this `run` function has been pre-defined based on our (the organizers) aggreement with the Grand-Challenge system so that they can provide and pick up your predictions for evaluation. This `run` function is where your entire algorithm will be executed. We expect you to fill in the code to do so within
+- `source/main.py`: This file contains a `run` function that is called by the `process.py`. The I/O of this `run` function has been pre-defined based on our (the organizers) aggreement with the Grand-Challenge system so that they can provide input to your docker and pick up your docker predictions for evaluation. This `run` function is where your entire algorithm will be executed. We expect you to fill in the code to do so within
 
 ```
 # ===== Whatever you need (function calls or complete algorithm) goes here
@@ -95,7 +102,7 @@ target, etc. We have designed the `Dockerfile` template so the contents in `data
 
 - `build.sh`: Helper bash script to generate a docker container based on the provided `Dockerfile` in the directory. Remember, in order to run this script you need to have a working installation of Docker on your system.
 
-## 3. Creating and Testing the docker container
+## 3. Creating and Testing the docker container <a name="test_docker"></a>
 
 Once you successfully test `source/main.py` locally for your algorithm, modify the `Dockerfile` and `requirements.txt` according to your needs and then run the `build.sh` bash script in your terminal to create the container:
 
@@ -132,11 +139,29 @@ dump_np = np.array(dump_np)
 assert np.sum(np.abs(dump_np - arr)) == 0
 ```
 
-## 4. Exporting the docker container
+## 4. Exporting the docker container <a name="export_docker"></a>
 Assuming that you have successfully passed all of the previous steps, you need to export your docker image to a file that is fitted for submission. This is done by calling `export.sh` bash script:
 ```bash
 sudo ./export.sh
 ```
 Note that you will need the `gzip` library installed if you want to successfully run this script. This step creates a file with the extension "tar.gz", which you can then upload to Grand Challenge to submit your algorithm.
 
-For submission guidelines, please refer to this [page]().
+For submission guidelines, please refer to this [page](https://github.com/TissueImageAnalytics/CoNIC/tree/docker-template).
+
+# Summary <a name="summary"></a>
+
+Assuming you have understood the above, here we provide a short summary of the described steps:
+
+1. Move your model weights (and other files if needed) into `data` folder.
+2. Move your code into `source` folder.
+3. Modify `main.py` to call your packaged code.
+4. Modify `LOCAL_ENTRY` and set `EXECUTE_IN_DOCKER=False` within `process.py` for local debugging.
+5. Use local python debugger to run and test `process.py`. This tests your code that has been added to `main.py`. Repeat previous steps upon failure.
+6. Modify `Dockerfile` to dockerize your code if necessary. You will likely skip this step if you have not deviated from our instructions.
+7. Set `EXECUTE_IN_DOCKER=True` within `process.py` and modify `requirements.txt` according to your needs.
+8. Modify `LOCAL_INPUT` and `LOCAL_OUTPUT` within `./test.sh`.
+9. Run `test.sh` for testing the docker image locally. Repeat previous steps upon failure.
+10. Run `export.sh` for generating docker image for submission.
+11. Make your Algorithm on Grand Challenge website. Please refer to this [page](https://github.com/TissueImageAnalytics/CoNIC/tree/docker-template) for setting up the interface.
+12. Upload docker image from step #10 to your Grand Challenge Algorithm.
+13. Submit your algorithm to CoNIC Challenge.
