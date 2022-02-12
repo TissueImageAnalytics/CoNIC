@@ -78,7 +78,7 @@ Now, in line with the above API, we pre-define and hard-code the input and outpu
 
 - `Dockerfile`: Contains the instruction for [Docker Engine](https://docs.docker.com/engine/install/) so that they can build your docker image.
 
-- `process.py`: This is the main file that we hard code the `Dockerfile` to run on the Grand Challenge Platform to make it easy for you. For **debugging** your python code **locally outside docker**, you need to set `EXECUTE_IN_DOCKER = False` and change the `LOCAL_ENTRY` dictionary values (for `"input_dir"`, `"output_dir"`, and `user_data_dir` keys) according to your system.
+- `process.py`: This is the file that we hard code within `Dockerfile` as entry point. When Grand Challenge platform run your docker, this file will be executed and it will call the `run` from `main.py` with the appropriate entry point. We have designed this file and `​source/main.py` based on our agreement with the Grand Challenge about the docker I/O. For **debugging** your python code **locally outside docker**, you need to set `EXECUTE_IN_DOCKER = False` and change the `LOCAL_ENTRY` dictionary values (for `"input_dir"`, `"output_dir"`, and `user_data_dir` keys) according to your system.
 
 
 - `source/main.py`: This file contains a `run` function that is called by the `process.py`. The I/O of this `run` function has been pre-defined based on our (the organizers) aggreement with the Grand-Challenge system so that they can provide input to your docker and pick up your docker predictions for evaluation. This `run` function is where your entire algorithm will be executed. We expect you to fill in the code to do so within
