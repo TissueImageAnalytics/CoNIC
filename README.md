@@ -89,4 +89,4 @@ on the top region, you can select for which phase and task you are submitting yo
 The most important thing here is to select the algorithm you created for this task from the "**Algorithms**" list. You can also write comments about the submitted algorithm. Also, if you are submitting an algorithm for one of the tasks in the "Final Test Phase", it is mandatory to past a link to the ArXiv manuscript in which you have explained the technical details of your algorithm in the **Preprint (Algorithm Description)** field. Finally, by clicking on the "**Save**" button you will submit your algorithm for evaluation on the challenges task. The process is the same for both tasks and phases.
 
 ## Video Tutorial <a name="video_tutorial"></a>
-For more information, please have a look at our [tutorial videos](https://conic-challenge.grand-challenge.org/Videos/).
+For more information, please have a look at our [tutorial videos](https://conic-challenge.grand-challenge.org/Submission/).
