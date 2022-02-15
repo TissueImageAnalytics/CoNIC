@@ -101,6 +101,6 @@ def run(
         cell_counts = pred_regression[type_name]
         save_as_json(
             cell_counts,
-            f'{output_dir}/{type_name}.json'
+            f'{output_dir}/{type_name}-count.json'
         )
     # >>>>>>>>>>>>>>>>>>>>>>>>>
