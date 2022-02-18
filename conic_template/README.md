@@ -31,6 +31,7 @@ After installing the docker, you can start by either copying this [folder]() and
 ```
 git clone -b docker-template https://github.com/TissueImageAnalytics/CoNIC
 ```
+> **Note:** If you are a Windows user and wish to dockerize your algorithm with Cuda capabilities, we recommend using WSL for dockerization. Details of doing this is available [here](https://github.com/TissueImageAnalytics/CoNIC/blob/docker-template/READEME_windows.md).
 
 ## 2. Docker Container and Grand Challenge API <a name="docker_io"></a>
 
