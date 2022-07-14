@@ -6,8 +6,19 @@ from source.main import run
 # ! DO NOT MODIFY - ORGANIZER SPECIFIC
 # <<<<<<<<<<<<<<<<<<<<<<<<<
 DOCKER_ENTRY = {
+    # path to folder that contain .mha for inference
     "input_dir": "/input/",
-    "output_dir": "/output/",
+
+    # path to folder that contain inference results,
+    # select approriate output based on the comments below
+
+    # ! This is for cellular composition submission
+    # "output_dir": "/output/",  
+    # ! This is for segmentation and classification, the nested folder needed to be created!
+    "output_dir": "/output/images/nuclear-segmentation-and-classification/",
+
+    # path to folder that contain user data such as
+    # neural network weights and stain matrices
     "user_data_dir": "/opt/algorithm/data/"
 }
 # >>>>>>>>>>>>>>>>>>>>>>>>>
