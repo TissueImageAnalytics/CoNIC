@@ -48,5 +48,30 @@ To appropriately calculate the metrics, ensure that your output is in the follow
   python compute_stats.py --mode="regression" --pred=<path_to_results> --true=<path_to_ground_truth>
   ```
 
-  
+## Cite
 
+If you are comparing against any of the methods within the challenge or using this repository or using our dataset, you must cite:
+
+- Graham, Simon, et al. "Lizard: A Large-Scale Dataset for Colonic Nuclear Instance Segmentation and Classification." Proceedings of the IEEE/CVF International Conference on Computer Vision. 2021.
+```
+@inproceedings{graham2021lizard,
+  title={Lizard: a large-scale dataset for colonic nuclear instance segmentation and classification},
+  author={Graham, Simon and Jahanifar, Mostafa and Azam, Ayesha and Nimir, Mohammed and Tsang, Yee-Wah and Dodd, Katherine and Hero, Emily and Sahota, Harvir and Tank, Atisha and Benes, Ksenija and others},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={684--693},
+  year={2021}
+}
+```
+
+- Graham, Simon, et al. "CoNIC Challenge: Pushing the frontiers of nuclear detection, segmentation, classification and counting." Medical image analysis 92 (2024): 103047.
+```latex
+@article{graham2024conic,
+  title={CoNIC Challenge: Pushing the frontiers of nuclear detection, segmentation, classification and counting},
+  author={Graham, Simon and Vu, Quoc Dang and Jahanifar, Mostafa and Weigert, Martin and Schmidt, Uwe and Zhang, Wenhua and Zhang, Jun and Yang, Sen and Xiang, Jinxi and Wang, Xiyue and others},
+  journal={Medical image analysis},
+  volume={92},
+  pages={103047},
+  year={2024},
+  publisher={Elsevier}
+}
+```
